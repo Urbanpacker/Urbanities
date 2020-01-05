@@ -1,0 +1,157 @@
+/* Formulaire */
+
+.form form{
+	margin:0 auto;
+	border-radius: 20px;
+	background-color:#fff;
+	padding:1rem 2%;
+}
+
+.form li > label:first-child{
+	font-weight:bold;
+	margin: 2rem auto 0.5rem;
+}
+
+.form label.required::after{
+	content:" *";
+	color:red;
+}
+
+.form legend, .form label{
+	display: block;
+	margin:auto;
+	text-align:center;
+	background-color: rgba(0,0,0,0);
+}
+
+.form legend{
+	margin:auto;
+	padding: 0 1rem;
+	color:#444;
+	font-size:2.5rem;
+	text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+	font-weight:bold;
+}
+
+.form form fieldset{
+	max-width:100%;
+	margin: 1rem auto;
+	padding:1rem 0;
+	border-radius:20px;
+}
+
+.form form ul{
+	display:flex;
+	flex-flow:column nowrap;
+	justify-content: space-around;
+	margin:0 auto;
+	max-width:100%;
+}
+
+.form li, fieldset{
+	max-width: 100%;
+}
+
+/* Puts each form button on a line */
+.form li.button{
+	flex-basis:100%;
+}
+
+.form input:not(:focus), textarea:not(:focus), select:not(:focus){
+	background-color:rgba(255,210,20, 0.5);
+}
+
+.form input:focus, .form textarea:focus, .form select:focus{
+	-webkit-box-shadow: 0px 0px 10px 2px purple;
+	-moz-box-shadow: 0px 0px 10px 2px purple;
+	box-shadow: 0px 0px 10px 2px purple;
+}
+
+.form input, .form button, .form textarea, .form select{
+	max-width:100%;
+	border-radius:15px;
+}
+
+.form input[type='text'], .form input[type='email'], .form input[type='password'], .form select{
+	width:80%;
+	padding:0.6rem;
+}
+
+.form .shortTextArea{
+	min-height:10rem;
+	padding:0.6rem;
+}
+
+.form .longTextArea{
+	min-height:20rem;
+	padding:0.6rem;
+}
+
+.form input[type='radio']{
+	margin-right: 0;
+}
+
+.form input[type='text'], textarea, select{
+	width:100%;
+}
+
+
+/****** Button ***********/
+
+.form button[type='submit']{
+	background-color:green;
+}
+
+.form button[type="reset"] {
+	background-color:red;
+}
+
+
+@media screen and (min-width: 720px) { /* Tablette version */
+	.form label{
+		padding-left:2rem;
+		display:block;
+	}
+
+	.form input[type='radio'] + label{
+		padding:0;
+	}
+}
+
+@media screen and (min-width: 1024px) { /*Desktop version */
+
+	.form form ul {
+		display:flex;
+		flex-flow:row wrap;
+		justify-content: space-around;
+		align-content : stretch;
+	}
+
+	.form li{
+		flex-basis:50%;
+		text-align: left;
+		padding:1%;
+		margin :0;
+	}
+	
+	.form li button{
+		display: block;
+		margin: auto;
+	}
+	
+	.form label{
+		text-align:left;
+		margin: 2rem auto 0.5rem !important;
+	}
+
+
+	.form li.button {
+		flex-basis:100%;
+		text-align: center;
+	}
+	
+	.form fieldset .error{
+		margin: 2rem 0;
+	}
+}
+

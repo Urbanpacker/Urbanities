@@ -1,0 +1,74 @@
+
+
+/***** Lists ********/
+
+.list{
+	display:flex;
+	flex-flow:column nowrap;
+	justify-content: space-around;
+}
+
+.list h1, section.list h2, section.list h3, section.list h4{
+	flex-basis:100%;
+	/*margin:auto;*/
+}
+
+.list article{
+	display:flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	margin:1rem 2rem;
+	padding:0 2rem;
+	transition: all .5s ease-out;
+	text-align: center;
+	-webkit-box-shadow: 0px 0px 34px -5px rgba(0,0,0,0.7);
+	-moz-box-shadow: 0px 0px 34px -5px rgba(0,0,0,0.7);
+	box-shadow: 0px 0px 34px -5px rgba(0,0,0,0.7);
+}
+
+.list article:not(:hover){
+	opacity: 0.7;
+}
+
+.list article:hover{
+	opacity: 1;
+	-webkit-box-shadow: 0px 0px 11px 8px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 11px 8px rgba(0,0,0,0.5);
+	box-shadow: 0px 0px 11px 8px rgba(0,0,0,0.5);
+}
+
+
+.list article:hover a, .list article a:focus {
+	color: Maroon;
+	text-decoration:underline;
+}
+
+.list article > picture{
+	max-width:100%;
+	display:block;
+}
+
+.list img{
+	border-radius:50px;
+}
+
+
+@media screen and (min-width: 720px) { /* version tablette */
+	
+	section.list{
+		flex-flow:row wrap;
+	}
+
+	section.list article{
+		flex-basis:45%;
+		margin:2rem auto;
+	}
+}
+
+@media screen and (min-width: 1024px) { /*version desktop */
+	
+	section.list article{
+		flex-basis:30%;
+	}
+
+}

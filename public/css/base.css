@@ -1,0 +1,43 @@
+* {
+	box-sizing: border-box;
+	text-decoration: none;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 1.6rem;
+}
+
+main, footer{
+	margin: 0 2rem;
+}
+
+ul{
+	list-style:none;
+}
+
+a{
+	text-decoration: none;
+	display:inline-block;
+	color:black;
+}
+
+input[type="radio"] + label, form input[type="radio"], form input[type="checkbox"] {
+	display:inline-block;
+}
+
+input, textarea{
+	resize : none;
+	overflow: auto;
+}
+
+.hidden {
+	display: none;
+}
+
+
