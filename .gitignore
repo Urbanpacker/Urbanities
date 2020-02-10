@@ -1,0 +1,4 @@
+*work/
+*.test
+*.sql
+config.inc.php
