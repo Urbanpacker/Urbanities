@@ -10,8 +10,8 @@ function checkRequiredData($dataRequired){
         if(!isset($dataRequired[$i]) || empty($dataRequired[$i])){
             return false;
         }
-        return true;
     }
+    return true;
 }
 
 /*******************/
