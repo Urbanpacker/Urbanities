@@ -1,4 +1,5 @@
 *work/
 *.test
 *.sql
-config.inc.php
+nohup.out
+conf.inc.php
