@@ -3,3 +3,5 @@
 *.sql
 nohup.out
 conf.inc.php
+.htaccess
+.htpasswd
