@@ -1,0 +1,362 @@
+html { font-size: 62.5%; }
+
+html, body, h1, h2, h3, a, p, span {
+  text-rendering: optimizeLegibility;
+  text-rendering: geometricPrecision;
+  font-smooth: always;
+  font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  /* -webkit-font-smoothing: subpixel-antialiased; */
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-moz-selection {
+  color: $primary;
+  background: $secondary;
+}
+
+::selection {
+  color: $primary;
+  background: $secondary;
+}
+
+body {
+  color: $primary;
+  font-family: $brizeux;
+  .container {
+    margin: 0 auto;
+  }
+  @include min-large {
+    .container {
+      width: calc(#{$large-width} - 100px);
+    }
+  }
+  @include large {
+    .container {
+      width: calc(#{$desktop-width} - 100px);
+    }
+  }
+  @include desktop {
+    .container {
+      width: calc(#{$laptop-width} - 100px);
+    }
+  }
+  @include laptop {
+    .container {
+      width: calc(#{$tablet-width} - 100px);
+    }
+  }
+  @include tablet {
+    .container {
+      width: calc(100% - 100px);
+    }
+  }
+  @include phone {
+    .container {
+      width: 320px;
+    }
+  }
+
+  .text_center_container {
+    max-width: 536px;
+    margin: 81px auto;
+  }
+}
+
+h1, h2, h3 {
+  font-family: $gosha;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 7.0rem;
+  text-align: center;
+  @include phone {
+    font-size: 3.0rem;
+  }
+}
+
+h2 {
+  font-size: 3.0rem;
+  margin-bottom: 10px;
+  @include laptop {
+    font-size: 2.5rem;
+  }
+}
+
+h3 { font-size: 1.8rem; }
+
+p {  font-size: 1.6rem; }
+
+strong { font-weight: 900; }
+
+ul {
+  list-style-type: none;
+  margin-left:0;
+  padding-left:0;
+}
+
+a {
+  text-decoration: none;
+  color: $primary;
+  &:hover, &:active, &:focus {
+    color: $secondary;
+  }
+}
+
+hr {
+  border: 2px solid $primary;
+  display: block;
+  width: 40px;
+  content: '';
+  margin: 20px auto;
+}
+
+iframe {
+    width: 100%;
+}
+
+.btn {
+  text-transform: lowercase;
+  font-weight: bold;
+  font-size: 1.4rem;
+  border: 2px solid;
+  box-shadow: 5px 5px 0px 0px $primary, 5px 5px 12px rgba($primary,0.15);
+  max-width: 260px;
+  padding: 6px 10px;
+  margin: auto;
+  cursor: pointer;
+  @extend .transition;
+  &.active, &:hover, &:focus {
+    background: $primary;
+    color: $white;
+    box-shadow: 10px 10px 0 0 $primary, 10px 10px 12px rgba($primary,0.25);
+  }
+  &.btn-inverse {
+    color: $white;
+    box-shadow: 5px 5px 0px 0px $white, 5px 5px 12px rgba($white,0.15);
+    &.active, &:hover, &:focus {
+      background: $white;
+      color: $primary;
+      box-shadow: 10px 10px 0 0 $white, 10px 10px 12px rgba($secondary,0.25);
+    }
+  }
+}
+
+.col-3 {
+  width: 25%;
+  @include phone {
+    width: 100%;
+  }
+}
+
+.col-4 {
+  width: 33.33%;
+  @include phone {
+    width: 100%;
+  }
+}
+
+.col-6 {
+  width: 50%;
+  @include phone {
+    width: 100%;
+  }
+}
+
+.col-9 {
+  width: 66.6%;
+  @include phone {
+    width: 100%;
+  }
+}
+
+.col-12 {
+  width: 100%;
+}
+
+.grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  .item {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+  }
+  @include tablet {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    .item {
+      width: 100%;
+    }
+  }
+}
+
+.mosaic {
+  @extend .display-flex ;
+  @extend .space-between ;
+  @include flex-flow(row, wrap);
+  @include tablet {
+    @include flex-flow(column, nowrap);
+  }
+  width: 100%;
+  .item {
+    position: relative;
+    height: 450px;
+    width: calc(25% - 2px);
+    overflow: hidden;
+    @extend .display-flex;
+    @include flex-flow(column, nowrap);
+    align-items: center;
+    justify-content: center;
+
+    h2 {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      color: $white;
+      font-size: 2.5rem;
+      line-height: 3rem;
+      letter-spacing: 0.075rem;
+      text-transform: uppercase;
+      text-align: center;
+      @extend .transition;
+    }
+
+    p {
+      position: absolute;
+      left: 0;
+      opacity: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      color: $white;
+      padding: 0 40px;
+      height: 98px;
+      overflow: hidden;
+      box-sizing: border-box;
+      text-align: center;
+      @extend .transition;
+    }
+
+    img {
+      position: absolute;
+      width: 100%;
+      z-index: -1;
+      opacity: 0.8;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: $primary;
+      z-index: -2;
+    }
+
+    &:after {
+      content: '';
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      position: absolute;
+      z-index: -1;
+      background-image: url(../images/more.svg);
+      background-repeat: no-repeat;
+      background-position: center 80%;
+      background-color: $primary;
+      transform: translateY(-100%);
+      background-size: 0;
+      @extend .transition;
+    }
+    &:hover {
+      &:after {
+        transform: translateY(0);
+        background-size: auto;
+        background-size: 46px;
+      }
+      h2 {
+        top: 20%;
+      }
+      p {
+        opacity: 1;
+      }
+    }
+    @include tablet {
+      width: 100%;
+    }
+  }
+}
+.transition {
+  @include transition(all .3s cubic-bezier(.75, 0, .17, 1));
+}
+
+.scroll-disable {
+  overflow: hidden;
+}
+
+
+// Slider UI
+.slick-dots {
+  display: flex !important;
+  justify-content: center;
+  margin: 20px auto;
+  li {
+    margin: 0 3px;
+    button {
+      @extend .appearance;
+      border: 2px solid $secondary;
+      width: 10px;
+      height: 10px;
+      padding: 0;
+      color: transparent;
+      cursor: pointer;
+      &:hover {
+        border-color: $primary;
+      }
+    }
+    &.slick-active {
+      button {
+        border: 2px solid $primary;
+      }
+    }
+  }
+}
+
+.slick-arrow {
+  @extend .appearance;
+  color: transparent;
+  width: 31px;
+  height: 31px;
+  background-size: contain;
+  background-position: center;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  @include transition(transform .3s cubic-bezier(.75, 0, .17, 1));
+  &.slick-prev {
+    background: url(../images/left_arrow.svg);
+    &:hover {
+      transform: translateX(-6px);
+    }
+  }
+  &.slick-next {
+    background: url(../images/right_arrow.svg);
+    &:hover {
+      transform: translateX(6px);
+    }
+  }
+}

@@ -1,0 +1,48 @@
+
+.posts-loop{
+	@extend .display-flex;
+	@extend .space-between ;
+	@include flex-flow(row, wrap);
+	@include tablet {
+		@include flex-direct-column();
+	}
+	article{
+		border : solid 1px red;
+		@include flex-basis(45%);
+		margin : 6rem auto;
+		@include tablet {
+			@include flex-direct-column();
+		}
+		.featured-img{
+			background:  no-repeat center content-box;
+		    width : 100%;
+		    height: 345px;
+		    @extend .display-flex;
+		    a{
+				@extend .transition;	
+				@extend .display-flex;
+			    opacity : 0;
+				height:40px;
+		    	margin: auto; 
+			    background-color: white;
+				width:80px;
+				@extend .btn ;
+				.cta{
+			    	margin:auto;
+				}
+		    }
+		}
+		&:hover .featured-img a {
+		    opacity : 1;
+		    @extend .transition;	
+		}
+		p.date{
+				text-align: right;
+				font-size : 1.5rem;
+				line-height: 3rem;
+		}
+		.article-preview{
+			margin : auto 11% 0.5rem 6%;
+		}
+	}
+}

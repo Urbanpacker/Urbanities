@@ -1,0 +1,179 @@
+$logo_height: 71px ;
+$logo_width: 145px;
+$arrow_size : 30px;
+
+.footer-container{
+  width: 80%;
+  margin: auto;
+}
+
+.footer-nav-title{
+  font-style:none;
+  font-weight: bold;
+  font-size: 1.6rem;
+  margin-bottom: 2.5rem;
+  @include tablet {
+    margin-bottom: 1rem;
+  }
+}
+
+footer {
+  padding-top:80px;
+  @include tablet {
+    padding-top:40px;
+  }
+
+  background-image : image-url('../images/grille.svg');
+  background-position: top center;
+  .main_footer{
+    background-color : $white;
+    border: solid 2px $primary;
+  }
+  .upper_main_footer{
+    @extend .footer-container;
+    @extend .display-flex;
+    @include align-items(center);
+    @include justify-content(flex-start);
+    .logo{
+      @extend .display-flex;
+      @include flex-basis(100%);
+      text-align: center;
+      a {
+        width: 100%;
+        img{
+          margin: auto;
+          height:$logo_height;
+          width:$logo_width;
+          max-width:100%;
+        }
+      }
+    }
+    .social-links {
+      margin-left:auto;
+      @extend .display-flex;
+      img {
+        width:5rem;
+        height:5rem;
+        width :100%;
+      }
+      a {
+        @extend .transition;
+        font-size: 1.6rem;
+        width: 5rem;
+        height: 25px;
+        margin: 4px;
+        @extend .display-flex;
+        @include align-items(center);
+        @include justify-content(center);
+      }
+    }
+  }
+
+  .sitemap {
+      .container {
+        @extend .footer-container;
+        border-top: solid $primary 2px;
+        @extend .display-flex;
+        @extend .space-between;
+        @include tablet {
+          @include flex-direct-column();
+          @include align-items(center);
+          .col {
+            margin-bottom: 2px;
+          }
+        }
+        .col {
+          max-width: 100%;
+          @extend .display-flex;
+          @include justify-content(flex-start);
+          border-color : $primary;
+          ul{
+            margin: 2rem 0;
+            @include tablet {
+              margin: 1rem 0;
+            }
+            li {
+              &:first-of-type{
+                @extend .footer-nav-title ;
+              }
+              font-size: 1.4rem;
+              margin: 0.5rem 0;
+              @include tablet {
+                margin: 0;
+                text-align: center;
+              }
+            }
+          }
+          .arrow{
+            @extend .display-flex;
+            @include justify-content(flex-end);
+            @include align-items(center);
+            img{
+              height:$arrow_size;
+              width :$arrow_size;
+              margin-right:0;
+              max-width:100%;
+            }
+          }
+        }
+      }
+        .newsletter{
+          position: relative;
+          @extend .display-flex;
+          @include tablet {
+            position: static;
+            @include flex-direct-column();
+            @include align-items(center);
+          }
+          form{
+            position: absolute;
+            bottom: 2rem;
+            right: 10%;
+            @include tablet {
+              position: static;
+            }
+            label, a {
+              font-size : 1.3rem;
+              font-weight: 900;
+            }
+            @include placeholder-color($primary,1);
+            input{
+              color : $primary;
+              border:none;
+              font-size: 1.2rem;
+            }
+          }
+        }
+  }
+  .subfooter {
+    @include align-items(center);
+    margin-top:40px;
+    background-color: $primary;
+    padding:15px 0;
+    .copyright{
+        @extend .display-flex;
+        @include justify-content(center);
+        color:$white;
+        font-size: 1.6rem;
+        @include tablet{
+          @include flex-direct-column();
+          @include align-items(center);
+          @include space-between();
+        }
+      li, li a{
+        color:$white;
+        margin: 0 0.5rem;
+        &:not(:last-child)::after{
+          content:' - ';
+        }
+        @include tablet{
+          margin: 0.5rem 0;
+          &:not(:last-child)::after{
+            content:'';
+          }
+          padding-top:0.1rem;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+/* Couleurs */
+$white: #FFF;
+$darken-white: #F6F6F6;
+$black: #1A1A21;
+$gray: #707070;
+$primary: #1E3CC8;
+$secondary: #7080C9;
+
+/* Typo */
+$brizeux: 'brizeux', sans-serif;
+$gosha: 'gosha', sans-serif;
+$lato: "Lato", sans-serif;
+
+/*
+@import "compass/css3";
+@import "compass/reset";
+@import 'lib/slick';
+
+@import 'general/form';
+@import 'general/helper';
+@import 'general/header';
+@import 'general/footer';
+@import 'general/modal';
+@import 'general/loop.scss';
+
+@import 'templates/accueil';
+@import 'templates/prestations';
+@import 'templates/single';
+@import 'templates/agenda';
+@import 'templates/contact';
+@import 'templates/single-privatisations';
+@import 'templates/events';
+*/
+
+@import 'general/fonts';
+@import 'general/mixin';
+
+@import 'normalize.scss';
+@import 'base.scss';
+@import 'templates/detail.scss';
+
+@import 'templates/form.scss';
+@import 'templates/list.scss';
+@import 'main_styles.scss';
