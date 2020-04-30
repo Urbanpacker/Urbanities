@@ -11,16 +11,15 @@
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css">
 		<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 		<!--Personnal CSS -->
-		<link rel="stylesheet" href="public/css/normalize.css">
-		<link rel="stylesheet" href="public/css/base.css">
 		<link rel="stylesheet" href="public/css/style.css">
-		<link rel="stylesheet" href="public/css/form.css">
-		<link rel="stylesheet" href="public/css/list.css">
-		<link rel="stylesheet" href="public/css/detail.css">
 		<!--Personnal scripts -->
 		<script src="public/js/utilities.js"></script>
-		<script src="public/js/geolocation.js"></script>
+		<!--<script src="public/js/geolocation.js"></script>-->
+		<script src="public/js/adresseGetter.js"></script>
+		<script src="public/js/mapCreator.js"></script>
 		<script src="public/js/form.js"></script>
+		<script src="public/js/main.js"></script>
+		
 	</head>
 	<body>
 		<!--HEADER-->
@@ -88,18 +87,13 @@
 				</small>
 			</p>
 			</aside>
-			<aside>
-				<h3>Compte de test membre normal</h3>
-				<ul>
-					<li>login : test@yopmail.com</li>
-					<li>password : testtest</li>
-				</ul>
+<!--
 				<h3>Compte de test membre administrateur</h3>
 				<ul>
 					<li>login : admintest@yopmail.com</li>
 					<li>password : testtest</li>
 				</ul>
-			</aside>
+-->			
 		</footer>
 	</body>
 </html>
