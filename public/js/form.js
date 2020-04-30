@@ -1,6 +1,5 @@
 'use strict';
 
-
 /*************************************************************************************************/
 /* ****************************************** DATA ****************************************** */
 /*************************************************************************************************/
@@ -137,6 +136,14 @@ window.addEventListener('DOMContentLoaded', (function(){
 // Listeners on focus / blur events to check filling of required fields and  data format
 	if(fields.length>0){
 		for(let i = 0, c = fields.length ; i < c ; ++i){
+			switch(fields[i].id){
+				case "email" :
+					fields[i].value = "test@yopmail.com";
+					break;
+				case "password" :
+					fields[i].value = "testtest";
+					break;
+			}
 			fields[i].addEventListener('focus', function(){
 			// Remove JS border of the input when focused to set back the :focused border already defined in the CSS
 				this.style.border='';
@@ -152,7 +159,6 @@ window.addEventListener('DOMContentLoaded', (function(){
 			document.location.reload();
 		});
 	}
-	
 	
 // Checks before submitting the form
 	if(submitForm){

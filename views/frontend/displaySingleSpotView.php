@@ -29,6 +29,9 @@
 <?php if($deletable) :?>
 				<div><a class="btn delete" href="?page=deleteSpot&spotId=<?= $spotDetail['spotId'] ?>">Supprimer ce spot</a></div>
 <?php endif; ?>
+
+				<div style="height:500px; width:80%; border : solid 2px black; margin:auto" id="mapContainer">
+				</div>
 			</section>
 <?php $content = ob_get_clean(); ?>
 <?php require('views/template.php'); ?>
