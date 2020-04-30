@@ -5,3 +5,4 @@ nohup.out
 conf.inc.php
 .htaccess
 .htpasswd
+public/.sass-cache*
