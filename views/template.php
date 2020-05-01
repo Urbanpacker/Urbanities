@@ -12,13 +12,10 @@
 		<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 		<!--Personnal CSS -->
 		<link rel="stylesheet" href="public/css/style.css">
-		<!--Personnal scripts -->
-		<script src="public/js/utilities.js"></script>
-		<!--<script src="public/js/geolocation.js"></script>-->
-		<script src="public/js/adresseGetter.js"></script>
-		<script src="public/js/mapCreator.js"></script>
-		<script src="public/js/form.js"></script>
-		<script src="public/js/main.js"></script>
+		<!--Personnal scripts-->
+		<script  src="public/js/utilities.js"></script>
+		<script type="module" src="public/js/index.js"></script>	
+
 		
 	</head>
 	<body>

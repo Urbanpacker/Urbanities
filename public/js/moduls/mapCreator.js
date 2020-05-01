@@ -42,3 +42,5 @@
 			L.marker([lat,long]).addTo(this.leafletMap);
 		}
 	}
+
+	export {UrbanMap};

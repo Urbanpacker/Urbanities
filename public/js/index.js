@@ -1,12 +1,29 @@
+'use strict'
 
-    window.addEventListener('DOMContentLoaded', ()=>{
+
+import {UrbanMap} from "./moduls/mapCreator.js";
+import {UserLocation} from "./moduls/getUserLocation.js" ;
+import {AdressGetter} from "./moduls/adressGetter.js" ;
+import * as Form from "./moduls/form.js" ;
+ 
+
+
+window.addEventListener('DOMContentLoaded', ()=>{
+	
+	let geolocateUser = false;
+	if(geolocateUser){	
+		var userLocation = new UserLocation() ; 
+		userLocation.getCurrentPosition()
+		.then((position) => userLocation.successGeo(position))
+		.then((coords) => userLocation.setNewPositionIntoStorage(coords))
+		.catch((error) => userLocation.failGeo(error));
+	}	
+
 		let adress;
 		let postcode;
 		const mapContainerId = "mapContainer" ;
 		const MAPCONTAINER = document.getElementById(mapContainerId);    
 		const zoomDegree = 15 ;
-//		var map ;    
-//		var myMap ;
 		
 		let fields = document.querySelectorAll("li[data-type]");
 		
@@ -42,13 +59,16 @@
 		}
 
 		if(coords.long && coords.lat){
-			setMap(coords)
+			setMap(coords);
 		}else{
-			getCoordsFromAdress(adress, postcode)
-			.then((result) => {
-				setMap(result);
-			},()=>{
+			let place = new AdressGetter();
+			place.getCoordsFromAdress(adress, postcode)
+			.then((result) => setMap(result))
+			.catch((error)=>{
+				console.error(error);
 				console.warn("Impossible de récupérer les coordonnées du spot à partir de son adresse.");
 			});
 		}
+
+
 });

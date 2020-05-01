@@ -1,5 +1,5 @@
-'use strict' ;
-	function getCoordsFromAdress(adress, postCode){
+class AdressGetter{
+	getCoordsFromAdress = (adress, postCode) => {
 		return new Promise((successCallback, failureCallback) => {
 			if(!postCode || !adress){return}
 			adress = adress.replace(/ /g, "+");
@@ -15,8 +15,7 @@
 					successCallback({adress, postCode, long, lat});
 				})
 				.catch((error)=>{
-					console.log(error);
-					failureCallback();
+					failureCallback(error);
 				});
 			} else{ // if the navigator does not support fetch API, then it uses traditionnal XHR method
 				var request = new XMLHttpRequest();
@@ -38,7 +37,9 @@
 				};
 				request.send();
 			}
-		})
+		});
 	}
+}
 
+export {AdressGetter};
 
