@@ -1,5 +1,19 @@
     class UrbanMap {
 		constructor(container, lat, long, zoomDegree = 15){
+			this.mapTileLayers = {
+				default : "http://tile.openstreetmap.org/{z}/{x}/{y}.png",
+				richer : "http://a.tile.openstreetmap.fr/osmfr/{z}/{x}/	{y}.png",
+				neighbourhood : "https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png",
+				landscape : "http://tile3.opencyclemap.org/landscape/{z}/{x}/{y}.png",
+				toner : "http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png",
+				transport : "http://tile2.opencyclemap.org/transport/{z}/{x}/{y}.png",
+				cycloMap : "https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
+				spinalMap : "https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png",
+				hikeBike : "https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png",
+				waterColor : "http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg",
+				humanitarian : "http://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+				outdoors : "http://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png",
+			}
 			this.mapContainer = container ;
 			this.leafletMap;
 			this.zoomDegree = zoomDegree;
@@ -12,7 +26,7 @@
 				long : long
 			};
 		}
-		setOSMMap = () => {
+		setOSMMap = (tileLayer = this.mapTileLayers.default) => {
 			// Checks that a container has been set
 			if(!this.mapContainer){
 				console.log("Pas de conteneur défini pour la carte")
@@ -32,7 +46,7 @@
 			this.leafletMap = L.map(this.mapContainer.id).setView(this.zoomPoint, this.zoomDegree);
 			this.mapContainer.classList.add("map");
 			// Loads the OSM tileLayer (map background) */
-			L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+			L.tileLayer(tileLayer,{
 				maxzoom:19,
 				attribution:'(c)<a href="http://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
 			}).addTo(this.leafletMap);

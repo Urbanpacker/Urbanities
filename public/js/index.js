@@ -26,9 +26,34 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
 		function setMap(coords){
 			var myMap = new UrbanMap(MAPCONTAINER, coords.lat, coords.long, zoomDegree);
-			myMap.setOSMMap();
-			myMap.setMarker();
+
+			var tileLayers = [] ;
 			
+			// Put every tilelayer of a the created UrbanMap into an array in order to an easyer use of it
+			for(let prop in myMap.mapTileLayers){
+				tileLayers.push(myMap.mapTileLayers[prop]);
+			}
+			
+			/*  Tilelayers to use : 
+				0. default
+				1. richer
+				2. neighbourhood
+				3. landscape
+				4. toner
+				5. transport
+				6. cycloMap
+				7. spinalMap
+				8. hikeBike
+				9. waterColor
+				10. humanitarian
+				11. outdoors
+			*/
+			// Ask the visitor which kind of OSM he wants to be displayed
+			let carte = prompt(`Quelle carte voulez-vous ? (tapez le numéro correspondant)\n0. default\n1. richer\n2. neighbourhood\n3. landscape\n4. toner\n5. transport\n6. cycloMap\n7. spinalMap\n8. hikeBike\n9. waterColor\n10. humanitarian\n11. outdoors`);
+
+			// Set an OSM Map with the tilelayer as a parameter, the default tilelayer is used in case of missing or irrelevant answer from the user 
+			myMap.setOSMMap(tileLayers[carte]);
+			myMap.setMarker();
 		}
 
 		for (let value of fields){
