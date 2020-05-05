@@ -9,52 +9,65 @@ import * as Form from "./moduls/form.js" ;
 
 window.addEventListener('DOMContentLoaded', ()=>{
 
+	const MAPCONTAINER = document.getElementById("mapContainer");    
+	const zoomDegree = 15 ;
+	function setMap(coords, zoomDegree){
+		if(!MAPCONTAINER){return;}
+		var myMap = new UrbanMap(MAPCONTAINER, coords.lat, coords.long, zoomDegree);
+		
+		/* Put every tilelayer of a the created UrbanMap into an array in order to use of it later easily */
+		var tileLayers = [] ;
+		for(let prop in myMap.mapTileLayers){
+			tileLayers.push(myMap.mapTileLayers[prop]);
+		}
+		/* Load the user chosen tilelayer */
+		let selectedMap = loadDataFromDomStorage("preferedMapTileLayer", "local") || 0;
+		
+		/****Scrolling menu to choose a map tilelayer */
+		let selectMap = document.createElement("select");
+		selectMap.style.maxWidth ="80%";
+		selectMap.style.margin="15px 0px"
+		let optNumber = 0 ;
+		for(let prop in myMap.mapTileLayers){
+			let opt = document.createElement("option");
+			opt.value = optNumber;
+			opt.innerText = ucFirst(prop);
+			if(optNumber === selectedMap){
+				opt.setAttribute("selected", "");
+			}
+			selectMap.appendChild(opt);
+			++optNumber;
+		}
+		insertBeforeElem(selectMap, MAPCONTAINER);
+	
+		/* Event listener watching the change of map tilelayer by the user  */
+		selectMap.onchange = (e) => {
+			let preferedMapTileLayer = 0;
+			for (let i =0, c = tileLayers.length ; i< c ; i++){
+				if(i === e.target.selectedIndex){
+					preferedMapTileLayer = i;
+					break
+				}
+			}
+			removeDataFromDomStorage("preferedMapTileLayer", "local");
+			saveDataToDomStorage("preferedMapTileLayer", preferedMapTileLayer, "local");
+			location.reload(true);
+		};
 
-	/********** Création de ma dynamique via coords ou adresses *************/
+		// Set an OSM Map with the tilelayer as a parameter, the default tilelayer is used in case of missing or irrelevant answer from the user 
+		//myMap.setOSMMap(tileLayers[carte]);
+		myMap.setOSMMap(tileLayers[selectedMap]);
+		myMap.setMarker();
+	}
 
+		/* SingleSpotDisplayer-dedicated functions */
 		let adress;
 		let postcode;
-		const MAPCONTAINER = document.getElementById("mapContainer");    
-		const zoomDegree = 15 ;
-
 		let fields = document.querySelectorAll("li[data-type]");
-
 		var coords = {
 			lat : null,
 			long : null
 		};
-
-		function setMap(coords){
-			var myMap = new UrbanMap(MAPCONTAINER, coords.lat, coords.long, zoomDegree);
-
-			var tileLayers = [] ;
-			
-			// Put every tilelayer of a the created UrbanMap into an array in order to an easyer use of it
-			for(let prop in myMap.mapTileLayers){
-				tileLayers.push(myMap.mapTileLayers[prop]);
-			}
-			
-			/*  Tilelayers to use : 
-				0. default
-				1. richer
-				2. neighbourhood
-				3. landscape
-				4. toner
-				5. transport
-				6. cycloMap
-				7. spinalMap
-				8. hikeBike
-				9. waterColor
-				10. humanitarian
-				11. outdoors
-			*/
-			// Ask the visitor which kind of OSM he wants to be displayed
-			let carte = prompt(`Quelle carte voulez-vous ? (tapez le numéro correspondant)\n0. default\n1. richer\n2. neighbourhood\n3. landscape\n4. toner\n5. transport\n6. cycloMap\n7. spinalMap\n8. hikeBike\n9. waterColor\n10. humanitarian\n11. outdoors`);
-
-			// Set an OSM Map with the tilelayer as a parameter, the default tilelayer is used in case of missing or irrelevant answer from the user 
-			myMap.setOSMMap(tileLayers[carte]);
-			myMap.setMarker();
-		}
 
 		for (let value of fields){
 			if(value.dataset.type == "latitude"){
@@ -80,12 +93,13 @@ window.addEventListener('DOMContentLoaded', ()=>{
 		}else{
 			let place = new AdressGetter();
 			place.getCoordsFromAdress(adress, postcode)
-			.then((result) => setMap(result))
+			.then((result) => setMap(result, zoomDegree))
 			.catch((error)=>{
 				console.error(error);
 				console.warn("Impossible de récupérer les coordonnées du spot à partir de son adresse.");
 			});
 		}
+
 	/***************************************************************************************/
 	/******** Récupération des informations de géolocalisation de l'internaute**************/
 	let geolocateUser = false;

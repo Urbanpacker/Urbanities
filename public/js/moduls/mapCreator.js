@@ -3,16 +3,17 @@
 			this.mapTileLayers = {
 				default : "http://tile.openstreetmap.org/{z}/{x}/{y}.png",
 				richer : "http://a.tile.openstreetmap.fr/osmfr/{z}/{x}/	{y}.png",
-				neighbourhood : "https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png",
-				landscape : "http://tile3.opencyclemap.org/landscape/{z}/{x}/{y}.png",
-				toner : "http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png",
-				transport : "http://tile2.opencyclemap.org/transport/{z}/{x}/{y}.png",
 				cycloMap : "https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
-				spinalMap : "https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png",
 				hikeBike : "https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png",
 				waterColor : "http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg",
 				humanitarian : "http://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+				toner : "http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png",
+			/*	neighbourhood : "https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png",
+				landscape : "http://tile3.opencyclemap.org/landscape/{z}/{x}/{y}.png",
+				transport : "http://tile2.opencyclemap.org/transport/{z}/{x}/{y}.png",
+				spinalMap : "https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png",
 				outdoors : "http://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png",
+			*/
 			}
 			this.mapContainer = container ;
 			this.leafletMap;
