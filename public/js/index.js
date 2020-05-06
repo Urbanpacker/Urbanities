@@ -164,39 +164,39 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
 /******************************************************************************** */
 window.addEventListener('DOMContentLoaded', ()=>{
-/* SingleSpot Form-dedicated functions */
-	
-	let adressToUse = document.getElementById("adress");
-	let postcodeToUse = document.getElementById("postcode");
-	let longitude = document.getElementById("longitude");
-	let latitude = document.getElementById("latitude");
-		
-	function getCoords(){
-		if(!adressToUse.value || !postcodeToUse.value){
-			return;
-		}
-		let place = new AdressGetter();
-		place.getCoordsFromAdress(adressToUse.value, postcodeToUse.value)
-		.then((result) => {
-			longitude.value = result.long;
-			latitude.value = result.lat;
-		})
-		.catch((error)=>{
-			console.error(error);
-			console.warn("Impossible de récupérer les coordonnées du spot à partir de son adresse.");
-		});	
-	}
-
-	if(document.querySelector("form")){
-		(()=>{
-			getCoords();				
-		})();
-		adressToUse.addEventListener("blur", ()=>{
-			getCoords();	
-		});
-		postcodeToUse.addEventListener("blur", ()=>{
-			getCoords();
-		});
-	}
-});
-
+    /* SingleSpot Form-dedicated functions */
+        
+        let adressToUse = document.getElementById("adress");
+        let postcodeToUse = document.getElementById("postcode");
+        let longitude = document.getElementById("longitude");
+        let latitude = document.getElementById("latitude");
+            
+        function getCoords(){
+            if(!adressToUse.value || !postcodeToUse.value){
+                return;
+            }
+            let place = new AdressGetter();
+            place.getCoordsFromAdress(adressToUse.value, postcodeToUse.value)
+            .then((result) => {
+                longitude.value = result.long;
+                latitude.value = result.lat;
+            })
+            .catch((error)=>{
+                console.error(error);
+                console.warn("Impossible de récupérer les coordonnées du spot à partir de son adresse.");
+            });	
+        }
+    
+        if(document.querySelector("form")){
+            (()=>{
+                getCoords();				
+            })();
+            adressToUse.addEventListener("blur", ()=>{
+                getCoords();	
+            });
+            postcodeToUse.addEventListener("blur", ()=>{
+                getCoords();
+            });
+        }
+    });
+    
