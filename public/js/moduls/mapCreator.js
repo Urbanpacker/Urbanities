@@ -26,6 +26,7 @@
 				lat : lat,
 				long : long
 			};
+			this.positions = [this.coords] ;
 		}
 		setOSMMap = (tileLayer = this.mapTileLayers.default) => {
 			// Checks that a container has been set
@@ -53,8 +54,17 @@
 			}).addTo(this.leafletMap);
 		}
 
+		addPosition(position){
+			this.positions.push(...position) ;
+		}
+
 		setMarker = (lat = this.coords.lat, long = this.coords.long)=>{
 			L.marker([lat,long]).addTo(this.leafletMap);
+		}
+		setSeveralMarkers = (positions) =>{
+			for(let i = 0, c = positions.length ; i<c ; i++){
+				L.marker([positions[i].lat,positions[i].long]).addTo(this.leafletMap);
+			}	
 		}
 	}
 

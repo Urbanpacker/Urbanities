@@ -11,6 +11,9 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
 	const MAPCONTAINER = document.getElementById("mapContainer");    
 	const zoomDegree = 15 ;
+
+/******************************************************************************** */
+
 	function setMap(coords, zoomDegree){
 		if(!MAPCONTAINER){return;}
 		var myMap = new UrbanMap(MAPCONTAINER, coords.lat, coords.long, zoomDegree);
@@ -54,13 +57,58 @@ window.addEventListener('DOMContentLoaded', ()=>{
 			location.reload(true);
 		};
 
+		let saveCoords = document.createElement("button");
+		saveCoords.innerText ="Sauver la position";
+		saveCoords.style = "margin : 0 auto 15px ; color : black ; maxWidth :50%; display :block"
+		insertBeforeElem(saveCoords, MAPCONTAINER);
+		saveCoords.onclick = (e => {
+			let savedCoords = loadDataFromDomStorage("savedCoords", "session");
+			removeDataFromDomStorage("savedCoords", "session");
+			let coordsPresentInStorage = false;
+			
+			/*If the DOM storage is empty, we create a new array with the currentspot position as a first element */
+			if(savedCoords === null){
+				savedCoords = [];
+				savedCoords.push({lat : myMap.coords.lat, long : myMap.coords.long});
+			} else{
+			/* We check that the current spot position has not been saved in the DOM storage yet */
+				for(let i = 0, c = savedCoords.length ; i < c ; i++){
+					if(((savedCoords[i].lat === myMap.coords.lat) && (savedCoords[i].long === myMap.coords.long))){
+						coordsPresentInStorage = true ;
+						break		
+					}
+				}	
+				if(!coordsPresentInStorage){
+					savedCoords.push({lat : myMap.coords.lat, long : myMap.coords.long})
+				}
+			}
+			saveDataToDomStorage("savedCoords", savedCoords, "session");
+		});
+
 		// Set an OSM Map with the tilelayer as a parameter, the default tilelayer is used in case of missing or irrelevant answer from the user 
 		//myMap.setOSMMap(tileLayers[carte]);
 		myMap.setOSMMap(tileLayers[selectedMap]);
-		myMap.setMarker();
+
+		/* Add the stored spot coordinates to the currently handled object UrbanMap */
+		let addingCoords = loadDataFromDomStorage("savedCoords", "session");
+		if(addingCoords){
+			myMap.addPosition(addingCoords);
+		}
+		
+		/*Set markers onto the displayed OSM Map */
+		if(myMap.positions.length > 1){
+			myMap.setSeveralMarkers(myMap.positions);
+		} else {
+			myMap.setMarker();
+		}
+
 	}
 
-		/* SingleSpotDisplayer-dedicated functions */
+/******************************************************************************** */
+
+	/* SingleSpot Displayer dedicated function */
+	(()=>{
+
 		let adress;
 		let postcode;
 		let fields = document.querySelectorAll("li[data-type]");
@@ -99,8 +147,8 @@ window.addEventListener('DOMContentLoaded', ()=>{
 				console.warn("Impossible de récupérer les coordonnées du spot à partir de son adresse.");
 			});
 		}
+	})();
 
-	/***************************************************************************************/
 	/******** Récupération des informations de géolocalisation de l'internaute**************/
 	let geolocateUser = false;
 		if(geolocateUser){	
@@ -112,5 +160,43 @@ window.addEventListener('DOMContentLoaded', ()=>{
 		}	
 	/***************************************************************************************/
 
-
 });
+
+/******************************************************************************** */
+window.addEventListener('DOMContentLoaded', ()=>{
+/* SingleSpot Form-dedicated functions */
+	
+	let adressToUse = document.getElementById("adress");
+	let postcodeToUse = document.getElementById("postcode");
+	let longitude = document.getElementById("longitude");
+	let latitude = document.getElementById("latitude");
+		
+	function getCoords(){
+		if(!adressToUse.value || !postcodeToUse.value){
+			return;
+		}
+		let place = new AdressGetter();
+		place.getCoordsFromAdress(adressToUse.value, postcodeToUse.value)
+		.then((result) => {
+			longitude.value = result.long;
+			latitude.value = result.lat;
+		})
+		.catch((error)=>{
+			console.error(error);
+			console.warn("Impossible de récupérer les coordonnées du spot à partir de son adresse.");
+		});	
+	}
+
+	if(document.querySelector("form")){
+		(()=>{
+			getCoords();				
+		})();
+		adressToUse.addEventListener("blur", ()=>{
+			getCoords();	
+		});
+		postcodeToUse.addEventListener("blur", ()=>{
+			getCoords();
+		});
+	}
+});
+
