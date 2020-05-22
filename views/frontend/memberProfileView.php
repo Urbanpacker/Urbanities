@@ -57,11 +57,10 @@ ob_start(); ?>
 				</article>
 <?php endforeach; ?>
 			</section>
-			<section>
+			<section class="hidden" id="currentPosition">
 				<h2>Votre position actuelle</h2>
-				<div id="mapContainer">
-					<p>(Nécessite d'autoriser la géolocalisation)</p>
-					<button id="mapTrigger" class="optionButton" type="button">Cliquez ici pour afficher la carte.</button>
+				<button id="mapTrigger" class="optionButton" type="button">Cliquez ici pour afficher la carte.</button>
+				<div class="hidden mapContainer" id="mapContainer">
 				</div>
 			</section>
 <?php $content = ob_get_clean(); ?>

@@ -49,15 +49,11 @@
 				return;
 			}
 			/* Checks that no map has already been set in the container */
-			if(this.mapContainer.hasChildNodes()){
-				let el = this.mapContainer.childNodes ;
-				for(let i = 0, c = el.length; i < c; ++i){
-					if(el[i].nodeType ===  Node.ELEMENT_NODE){
-						console.error("Une carte a déjà été créée dans ce conteneur");
-						return;
-					}
-				}
+			if(this.mapContainer.classList.contains("leaflet-container")){
+				console.error("Une carte a déjà été créée dans ce conteneur");
+				return;
 			}
+			
 			/* Initializes a OSM Map with options */
 			this.leafletMap = L.map(this.mapContainer.id).setView(this.zoomPoint, this.zoomDegree);
 			this.mapContainer.classList.add("map");

@@ -15,8 +15,6 @@
 		<!--Personnal scripts-->
 		<script  src="public/js/utilities.js"></script>
 		<script type="module" src="public/js/index.js"></script>	
-
-		
 	</head>
 	<body>
 		<!--HEADER-->
@@ -37,8 +35,8 @@
 					</li>
 					<li><a href="?page=home#generalLatestSpots">Derniers spots en ligne</a>
 					</li>
-						<li><a href="?page=home#mapContainer">Votre position actuelle</a>
-					</li>
+<!--				<li><a href="?page=home#currentPosition">Votre position actuelle</a>
+-->					</li>
 					<li>
 						<a href="?page=addNewSpot">Ajouter un spot
 						</a>

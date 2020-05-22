@@ -19,12 +19,8 @@ class UserLocation {
 	//Callback in case of success of the geolocation
 	successGeo = ({coords}) => {
 		return new Promise((successCallback, failureCallback) => {
-			let coordsAccuracyReliable = coords.accuracy <= this.minGeolocAccuracy ? true : false;
+			let coordsAccuracyReliable = (coords.accuracy <= this.minGeolocAccuracy) ? true : false;
 			if(coordsAccuracyReliable){
-				console.log("Coordonnées courantes récupérées");
-				console.log("La lat est "+coords.latitude);
-				console.log("La long est "+coords.longitude);
-				console.log("La précision de la mesure (en mètres) est "+coords.accuracy);
 				successCallback(coords);
 			} else{
 				let warnMessage = "La précision de la géolocalisation n\'est pas suffisante (inférieure à "+ this.minGeolocAccuracy + " mètres) pour indiquer votre position de manière fiable. \n Veuillez rafraîchir la page et réeessayer ultérieurement.";
@@ -61,12 +57,8 @@ class UserLocation {
 	
 	//Set the current position in the session DOMstorage, replace the former one if already present
 	setNewPositionIntoStorage = (coords) => {
-		console.log("test : setNewPositionIntoStorage ");
 		let formerMemberPosition = loadDataFromDomStorage('memberPosition', 'session');
 		if(formerMemberPosition !== undefined){
-			if(formerMemberPosition === coords){
-				return;
-			}
 			removeDataFromDomStorage('memberPosition', 'session');
 		}
 		saveDataToDomStorage('memberPosition', coords, 'session');
