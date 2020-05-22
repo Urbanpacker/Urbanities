@@ -1416,58 +1416,57 @@ article {
   margin: auto;
 }
 
+/* line 378, ../sass/_main_styles.scss */
+.mapContainer {
+  border: solid 2px black;
+  height: 500px;
+  margin: auto;
+  width: 80%;
+}
+
 /* FOOTER */
-/* line 381, ../sass/_main_styles.scss */
+/* line 388, ../sass/_main_styles.scss */
 footer, aside {
   text-align: center;
   max-width: 1100px;
   margin: 2rem auto;
 }
 
-/* line 387, ../sass/_main_styles.scss */
+/* line 394, ../sass/_main_styles.scss */
 small {
   max-width: 85%;
   margin: auto;
 }
 
-/* line 393, ../sass/_main_styles.scss */
+/* line 400, ../sass/_main_styles.scss */
 footer a:hover, footer a:focus, footer a:active {
   color: Maroon;
   text-decoration: underline;
 }
 
-/* line 398, ../sass/_main_styles.scss */
-.map {
-  z-index: 0;
-  height: 500px;
-  width: 2000px;
-  margin: auto;
-  max-width: 100%;
-}
-
 /********** Tablet version *****/
 @media all and (min-width: 720px) {
   /* HEADER */
-  /* line 413, ../sass/_main_styles.scss */
+  /* line 414, ../sass/_main_styles.scss */
   header {
     max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* line 419, ../sass/_main_styles.scss */
+  /* line 420, ../sass/_main_styles.scss */
   #logo i {
     padding: 0 0.5rem;
     display: inline-block;
   }
 
-  /* line 424, ../sass/_main_styles.scss */
+  /* line 425, ../sass/_main_styles.scss */
   header nav {
     text-align: center;
     background-image: none;
   }
 
-  /* line 429, ../sass/_main_styles.scss */
+  /* line 430, ../sass/_main_styles.scss */
   header nav > ul {
     flex-flow: row wrap;
     justify-content: center;
@@ -1476,106 +1475,106 @@ footer a:hover, footer a:focus, footer a:active {
     height: 100%;
   }
 
-  /* line 437, ../sass/_main_styles.scss */
+  /* line 438, ../sass/_main_styles.scss */
   header nav > ul li {
     flex-basis: 20%;
   }
 
-  /* line 441, ../sass/_main_styles.scss */
+  /* line 442, ../sass/_main_styles.scss */
   header #logo {
     padding: 0.5rem 0;
   }
 
-  /* line 445, ../sass/_main_styles.scss */
+  /* line 446, ../sass/_main_styles.scss */
   header nav > ul {
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
   }
 
-  /* line 452, ../sass/_main_styles.scss */
+  /* line 453, ../sass/_main_styles.scss */
   header nav > ul li {
     margin: 1.5rem auto;
   }
 
-  /* line 456, ../sass/_main_styles.scss */
+  /* line 457, ../sass/_main_styles.scss */
   #topMenu:not(:target) {
     background-color: transparent;
   }
 
-  /* line 460, ../sass/_main_styles.scss */
+  /* line 461, ../sass/_main_styles.scss */
   #topMenu:not(:target) ul {
     opacity: 0;
   }
 
-  /* line 464, ../sass/_main_styles.scss */
+  /* line 465, ../sass/_main_styles.scss */
   #topMenu:target {
     transform: translateX(0);
     position: static;
     z-index: 1;
   }
 
-  /* line 470, ../sass/_main_styles.scss */
+  /* line 471, ../sass/_main_styles.scss */
   #topMenu > ul li {
     flex-basis: 45%;
   }
 }
 /********** Desktop version ************/
 @media all and (min-width: 1024px) {
-  /* line 480, ../sass/_main_styles.scss */
+  /* line 481, ../sass/_main_styles.scss */
   header {
     width: 100%;
   }
 
-  /* line 484, ../sass/_main_styles.scss */
+  /* line 485, ../sass/_main_styles.scss */
   nav > ul {
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
   }
 
-  /* line 490, ../sass/_main_styles.scss */
+  /* line 491, ../sass/_main_styles.scss */
   nav > ul li {
     margin: 1.5rem auto;
   }
 
   /* HEADER */
-  /* line 496, ../sass/_main_styles.scss */
+  /* line 497, ../sass/_main_styles.scss */
   #topMenu, #topMenu ul {
     position: static;
     transform: none !important;
     opacity: 1 !important;
   }
 
-  /* line 503, ../sass/_main_styles.scss */
+  /* line 504, ../sass/_main_styles.scss */
   #openTopMenu,
   #closeTopMenu {
     display: none;
   }
 
-  /* line 508, ../sass/_main_styles.scss */
+  /* line 509, ../sass/_main_styles.scss */
   #topMenu > ul li {
     flex-basis: 20%;
     margin: 1rem;
   }
 
-  /* line 513, ../sass/_main_styles.scss */
+  /* line 514, ../sass/_main_styles.scss */
   #memberNotice {
     text-align: right;
   }
 
   /* MAIN */
-  /* line 518, ../sass/_main_styles.scss */
+  /* line 519, ../sass/_main_styles.scss */
   main nav > ul li {
     flex-basis: 20%;
   }
 
-  /* line 522, ../sass/_main_styles.scss */
+  /* line 523, ../sass/_main_styles.scss */
   .error {
     margin: 2rem auto;
   }
 
-  /* line 526, ../sass/_main_styles.scss */
+  /* line 527, ../sass/_main_styles.scss */
   button {
     margin: 0;
   }

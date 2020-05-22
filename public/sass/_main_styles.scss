@@ -375,6 +375,13 @@ article{
 	margin:auto;
 }
 
+.mapContainer{
+	border : solid 2px black;
+	height:500px;
+	margin:auto;
+	width:80%;
+	
+}
 
 /* FOOTER */
 
@@ -395,13 +402,7 @@ footer a:hover, footer a:focus, footer a:active {
 	text-decoration:underline;
 }
 
-.map{
-	z-index:0;
-	height:500px;
-	width:2000px;
-	margin:auto;
-	max-width:100%;
-}
+
 
 /********** Tablet version *****/
 
