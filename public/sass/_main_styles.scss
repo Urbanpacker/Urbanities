@@ -376,11 +376,12 @@ article{
 }
 
 .mapContainer{
-	border : solid 2px black;
+	z-index:0;
 	height:500px;
+	width:2000px;
 	margin:auto;
-	width:80%;
-	
+	max-width:80%;
+	border : solid 2px black;
 }
 
 /* FOOTER */
