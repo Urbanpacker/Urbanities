@@ -35,8 +35,7 @@
 					</li>
 					<li><a href="?page=home#generalLatestSpots">Derniers spots en ligne</a>
 					</li>
-<!--				<li><a href="?page=home#currentPosition">Votre position actuelle</a>
--->					</li>
+					</li>
 					<li>
 						<a href="?page=addNewSpot">Ajouter un spot
 						</a>
@@ -62,16 +61,16 @@
 				<h2>Sites en lien avec le sujet</h2>
 				<ul>
 					<li>
-						<a href="#" title="Projet OpenStreetMaps">OpenStreetMaps</a>
+						<a href="https://www.openstreetmap.org/" title="Projet OpenStreetMaps">OpenStreetMaps</a>
 					</li>
 					<li>
-						<a href="#" title="Annuaire des équipements de la ville de Lyon">Equipements de le ville de Lyon</a>
+						<a href="https://www.lyon.fr/equipements" title="Annuaire des équipements de la ville de Lyon">Equipements de le ville de Lyon</a>
 					</li>
 					<li>
-						<a href="#" title="Service Google Maps">Google Maps</a>
+						<a href="https://www.google.com/maps" title="Service Google Maps">Google Maps</a>
 					</li>
 					<li>
-						<a href="#" title="Site de Sleeping in Airport">Sleeping in Airport</a>
+						<a href="https://www.sleepinginairports.net/" title="Site de Sleeping in Airport">Sleeping in Airport</a>
 					</li>
 				</ul>
 			</aside>
