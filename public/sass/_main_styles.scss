@@ -375,6 +375,14 @@ article{
 	margin:auto;
 }
 
+.mapContainer{
+	z-index:0;
+	height:500px;
+	width:2000px;
+	margin:auto;
+	max-width:80%;
+	border : solid 2px black;
+}
 
 /* FOOTER */
 
@@ -395,13 +403,7 @@ footer a:hover, footer a:focus, footer a:active {
 	text-decoration:underline;
 }
 
-.map{
-	z-index:0;
-	height:500px;
-	width:2000px;
-	margin:auto;
-	max-width:100%;
-}
+
 
 /********** Tablet version *****/
 

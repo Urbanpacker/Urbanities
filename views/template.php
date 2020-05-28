@@ -10,20 +10,11 @@
 		<!--- Loads Leaflet stylesheet and JS API and for the inclusion of an OSM Map -->
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css">
 		<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
-		<!--Personnal CSS 
-		<link rel="stylesheet" href="public/css/normalize.css">
-		<link rel="stylesheet" href="public/css/base.css">
+		<!--Personnal CSS -->
 		<link rel="stylesheet" href="public/css/style.css">
-		<link rel="stylesheet" href="public/css/form.css">
-		<link rel="stylesheet" href="public/css/list.css">
-		<link rel="stylesheet" href="public/css/detail.css">
-		-->
-		<link rel="stylesheet" href="public/css/style.css">
-		
-		<!--Personnal scripts -->
-		<script src="public/js/utilities.js"></script>
-		<script src="public/js/geolocation.js"></script>
-		<script src="public/js/form.js"></script>
+		<!--Personnal scripts-->
+		<script  src="public/js/utilities.js"></script>
+		<script type="module" src="public/js/index.js"></script>	
 	</head>
 	<body>
 		<!--HEADER-->
@@ -44,7 +35,6 @@
 					</li>
 					<li><a href="?page=home#generalLatestSpots">Derniers spots en ligne</a>
 					</li>
-						<li><a href="?page=home#mapContainer">Votre position actuelle</a>
 					</li>
 					<li>
 						<a href="?page=addNewSpot">Ajouter un spot
@@ -71,16 +61,16 @@
 				<h2>Sites en lien avec le sujet</h2>
 				<ul>
 					<li>
-						<a href="#" title="Projet OpenStreetMaps">OpenStreetMaps</a>
+						<a href="https://www.openstreetmap.org/" title="Projet OpenStreetMaps">OpenStreetMaps</a>
 					</li>
 					<li>
-						<a href="#" title="Annuaire des équipements de la ville de Lyon">Equipements de le ville de Lyon</a>
+						<a href="https://www.lyon.fr/equipements" title="Annuaire des équipements de la ville de Lyon">Equipements de le ville de Lyon</a>
 					</li>
 					<li>
-						<a href="#" title="Service Google Maps">Google Maps</a>
+						<a href="https://www.google.com/maps" title="Service Google Maps">Google Maps</a>
 					</li>
 					<li>
-						<a href="#" title="Site de Sleeping in Airport">Sleeping in Airport</a>
+						<a href="https://www.sleepinginairports.net/" title="Site de Sleeping in Airport">Sleeping in Airport</a>
 					</li>
 				</ul>
 			</aside>
@@ -91,18 +81,12 @@
 				</small>
 			</p>
 			</aside>
-<!--			<aside>
-				<h3>Compte de test membre normal</h3>
-				<ul>
-					<li>login : test@yopmail.com</li>
-					<li>password : testtest</li>
-				</ul>
+<!--
 				<h3>Compte de test membre administrateur</h3>
 				<ul>
 					<li>login : admintest@yopmail.com</li>
 					<li>password : testtest</li>
 				</ul>
-			</aside>
 -->			
 		</footer>
 	</body>
