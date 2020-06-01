@@ -1,7 +1,7 @@
 'use strict'
 
-import {UrbanMap} from "./moduls/UrbanMap.js";
-import {UserLocation} from "./moduls/UserLocation.js" ;
+import {UrbanMap} from "./modulsurbanMap.js";
+import {UserLocation} from "./moduls/userLocation.js" ;
 import {AdressGetter} from "./moduls/adressGetter.js" ;
 import * as Form from "./moduls/form.js" ;
 
