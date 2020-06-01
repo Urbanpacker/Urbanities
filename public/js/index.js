@@ -1,6 +1,6 @@
 'use strict'
 
-import {UrbanMap} from "./modulsurbanMap.js";
+import {UrbanMap} from "./moduls/urbanMap.js";
 import {UserLocation} from "./moduls/userLocation.js" ;
 import {AdressGetter} from "./moduls/adressGetter.js" ;
 import * as Form from "./moduls/form.js" ;
