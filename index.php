@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+/*******************/
+
+define("SESSION_MEMBER_ID", $_SESSION['memberId']);
+define("SPOT_ID", $_GET['spotId']);
+define("REQUIRED_PAGE", $_GET['page']);
+
 require('controller/frontendController.php');
 
 $db = dbConnect();
@@ -14,24 +20,7 @@ function checkRequiredData($dataRequired){
     return true;
 }
 
-/*******************/
-
-define("SESSION_MEMBER_ID", $_SESSION['memberId']);
-define("SPOT_ID", $_GET['spotId']);
-define("REQUIRED_PAGE", $_GET['page']);
-
-
-if(NULL === SESSION_MEMBER_ID){
-    if(isset($_POST['email']) && isset($_POST['password'])){
-        if(loginMember($_POST)){
-           header('Location: index.php');
-        } else {
-            displayLoginForm(true);    
-        }
-    } else {
-        displayLoginForm(false);    
-    }
-} else {
+function accessMemberArea(){
     $memberIsAdmin = intval($_SESSION['memberIsAdmin']) ;
     $currentMemberId = SESSION_MEMBER_ID;
     if((NULL !== SPOT_ID) && (checkRequiredData([SPOT_ID, $currentMemberId]))){
@@ -75,4 +64,38 @@ if(NULL === SESSION_MEMBER_ID){
                 displayMemberProfile(SESSION_MEMBER_ID, $currentMemberId) ;
         }
     }
+}
+
+if(NULL === SESSION_MEMBER_ID){
+
+    if(NULL === $_SESSION['pageAfterLogin']){
+        $_SESSION['pageAfterLogin'] = $_GET['page'];
+    }
+
+    if(NULL === $_SESSION['spotAfterLogin']){
+        $_SESSION['spotAfterLogin'] = $_GET['spotId'];
+    }
+
+    if(NULL === $_SESSION['catAfterLogin']){
+        $_SESSION['catAfterLogin'] = $_GET['catId'];
+    }
+
+    
+    if(isset($_POST['email']) && isset($_POST['password'])){
+        if(loginMember($_POST)){
+            $requiredPage = $_SESSION['pageAfterLogin'];
+            unset($_SESSION['pageAfterLogin']);
+            $requiredSpot = $_SESSION['spotAfterLogin'];
+            unset($_SESSION['spotAfterLogin']);
+            $catAfterLogin = $_SESSION['catAfterLogin'];
+            unset($_SESSION['catAfterLogin']);
+            header('Location: index.php?page='.$requiredPage.'&spotId='.$requiredSpot.'&catId='.$catAfterLogin);
+        } else {
+            displayLoginForm(true);    
+        }
+    } else {
+        displayLoginForm(false);    
+    }
+} else {
+    accessMemberArea();    
 }
