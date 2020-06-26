@@ -18,6 +18,8 @@ function checkRequiredData($dataRequired){
 
 define("SESSION_MEMBER_ID", $_SESSION['memberId']);
 define("SPOT_ID", $_GET['spotId']);
+define("REQUIRED_PAGE", $_GET['page']);
+
 
 if(NULL === SESSION_MEMBER_ID){
     if(isset($_POST['email']) && isset($_POST['password'])){
@@ -32,12 +34,8 @@ if(NULL === SESSION_MEMBER_ID){
 } else {
     $memberIsAdmin = intval($_SESSION['memberIsAdmin']) ;
     $currentMemberId = SESSION_MEMBER_ID;
-    if(!isset($_GET['page'])){
-        displayMemberProfile(SESSION_MEMBER_ID, $currentMemberId);
-    }
-
     if((NULL !== SPOT_ID) && (checkRequiredData([SPOT_ID, $currentMemberId]))){
-        switch($_GET['page']){
+        switch(REQUIRED_PAGE){
             case 'addToFav' :
                 addToFavController(SPOT_ID, $currentMemberId);
                 break;
@@ -57,7 +55,7 @@ if(NULL === SESSION_MEMBER_ID){
                 displayMemberProfile(SESSION_MEMBER_ID, $currentMemberId) ;
         }
     } else{
-        switch($_GET['page']){
+        switch(REQUIRED_PAGE){
             case 'addNewSpot':
                 displaySpotForm($currentMemberId);
                 break;
