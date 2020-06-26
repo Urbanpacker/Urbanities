@@ -5,14 +5,16 @@ if(!$spotsCategorized): ?>
 <?php else : ?>
 		<section class="list" id="categorizedSpotsList">
 			<h1><?= $h1 ?></h1>
-<?php foreach($spotsCategorized as $spot): ?>
+<?php foreach($spotsCategorized as $spot): 
+	$spotImage = $spot['spotImage']; 
+	$spotName = $spot['spotName']; ?>
 				<article id="<?=$spot['spotId']?>">
 					<picture>
-						<source srcset="public/img/categories/<?=$spot['spotImage']?>_small.jpg" media="(max-width: 720px)">
-						<source srcset="public/img/categories/<?=$spot['spotImage']?>_medium.jpg" media="(max-width: 1024px)">
-						<img src="public/img/categories/<?=$spot['spotImage']?>_big.jpg" alt="<?=$spot['spotName']?>" />
+						<source srcset="public/img/categories/<?=$spotImage?>_small.jpg" media="(max-width: 720px)">
+						<source srcset="public/img/categories/<?=$spotImage?>_medium.jpg" media="(max-width: 1024px)">
+						<img src="public/img/categories/<?=$spotImage?>_big.jpg" alt="<?=$spotName?>" />
 					</picture>	
-						<a href="?page=spotDetail&spotId=<?=$spot['spotId']?>"><h3><?=$spot['spotName']?></h3></a>
+						<a href="?page=spotDetail&spotId=<?=$spot['spotId']?>"><h3><?=$spotName?></h3></a>
 						<p><?=$spot['catName']?></p>
 						<p class="postcode"><?=$spot['spotPostcode']?></p>
 						<p><?=$spot['spotAdress']?></p>

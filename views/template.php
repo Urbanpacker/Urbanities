@@ -81,13 +81,6 @@
 				</small>
 			</p>
 			</aside>
-<!--
-				<h3>Compte de test membre administrateur</h3>
-				<ul>
-					<li>login : admintest@yopmail.com</li>
-					<li>password : testtest</li>
-				</ul>
--->			
 		</footer>
 	</body>
 </html>

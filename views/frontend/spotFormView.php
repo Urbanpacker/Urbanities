@@ -1,11 +1,15 @@
 <?php
-ob_start(); ?>
+	ob_start();
+	define("SPOT_EXISTING_DATA_ID", $spotExistingData['spotId']);
+	define("SPOT_EXISTING_DATA_COUNTRY_NAME", $spotExistingData['countryName']);
+	define("SPOT_EXISTING_DATA_VISIBILITY", $spotExistingData['spotVisibility']);
+?>
 			<section class="form">
 				<h1><?= $h1 ?></h1>
 				<form class="" method="post" action ="?page=recordSpot">
 					<input type="hidden" id="memberId" name="memberId" value="<?= $authorId ?>"/>
-<?php if($spotExistingData['spotId']): ?>
-					<input type="hidden" id="spotId" name="spotId" value="<?= $spotExistingData['spotId'] ?>"/>
+<?php if(SPOT_EXISTING_DATA_ID): ?>
+					<input type="hidden" id="spotId" name="spotId" value="<?= SPOT_EXISTING_DATA_ID ?>"/>
 <?php endif;?>
 					<fieldset>
 				        <legend>Informations sur le lieu</legend>
@@ -13,8 +17,10 @@ ob_start(); ?>
 							<li><label class="required" for="categoryName">Type de lieu</label>
 								<select id="categoryId" name="categoryId" required>
 									<option value="">Saisissez un type de lieu</option>
-<?php foreach($categories as $category):  ?>
-									<option value="<?= $category['catId']?>" <?php if($category['catName'] == $spotExistingData['catName']){ echo 'selected'; } ?>><?= $category['catName']?></option>
+<?php foreach($categories as $category):
+	$catName = $category['catName'] ;
+?>
+									<option value="<?= $category['catId']?>" <?php if($catName == $spotExistingData['catName']){ echo 'selected'; } ?>><?= $catName?></option>
 <?php endforeach; ?>
 								</select>
 					        </li>
@@ -36,15 +42,16 @@ ob_start(); ?>
 							<li><label class="required" for="countryId">Pays</label>
 						    	<select id="countryId" name="countryId" required>
 									<option value="">-- Sélectionner un pays --</option>
-<?php foreach($countries as $country):  ?>
-									<option value="<?= $country['countryId']?>"<?php if(($country['countryName'] == 'France' && $country['countryName'] != $spotExistingData['countryName']) || $country['countryName'] == $spotExistingData['countryName']){echo ' selected ';} ?>><?= $country['countryName']?></option>
+<?php foreach($countries as $country): 
+	$countryName = $country['countryName'] ; ?>
+									<option value="<?= $country['countryId']?>"<?php if(($countryName == 'France' && $countryName != SPOT_EXISTING_DATA_COUNTRY_NAME) || $countryName == SPOT_EXISTING_DATA_COUNTRY_NAME){echo ' selected ';} ?>><?= $countryName?></option>
 <?php endforeach; ?>
 					            </select>
 				            </li>
 							<li><label for="description">Spot visible par les autres utilisateurs ?</label>	    	
-								<input type="radio" name="visibility" value="1" id="visibilityTrue" <?php if($spotExistingData['spotVisibility'] == '1'){ echo 'checked="checked"'; }?>/>
+								<input type="radio" name="visibility" value="1" id="visibilityTrue" <?php if(SPOT_EXISTING_DATA_VISIBILITY == '1'){ echo 'checked="checked"'; }?>/>
 								<label for="visibilityTrue">Oui</label>
-								<input type="radio" name="visibility" value="0" id="visibilityFalse" <?php if($spotExistingData['spotVisibility'] == '0' || $spotExistingData['spotVisibility'] == ''){ echo 'checked="checked"';}?>/>
+								<input type="radio" name="visibility" value="0" id="visibilityFalse" <?php if(SPOT_EXISTING_DATA_VISIBILITY == '0' || SPOT_EXISTING_DATA_VISIBILITY == ''){ echo 'checked="checked"';}?>/>
 								<label for="visibilityFalse">Non</label>
 							</li>
 							<li><label class="required" for="adress">Adresse (240 caractères maximum)</label>
@@ -54,7 +61,7 @@ ob_start(); ?>
 								<textarea class="longTextArea" id="description" name="description" ><?= $spotExistingData['spotDescription'] ?></textarea>
 							</li>
 							<li>
-								<button class="button" type="submit"><?php if(!$spotExistingData['spotId']): ?>Créer le spot<?php else: ?>Mettre à jour le spot<?php endif; ?></button>
+								<button class="button" type="submit"><?php if(!SPOT_EXISTING_DATA_ID): ?>Créer le spot<?php else: ?>Mettre à jour le spot<?php endif; ?></button>
 							</li>
 							<li>
 								<button class="button" type="reset">Annuler</button>

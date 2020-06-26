@@ -1,15 +1,18 @@
-<?php ob_start(); ?>
+<?php 
+define("SPOT_IMAGE", $spotDetail['spotImage']);
+define("SPOT_ID", $spotDetail['spotId']);
+ob_start(); ?>
 			<h1><?= $h1 ?></h1>
 			<section id="detailItem" class="detailItem">
 				<picture>
-					<source srcset="public/img/categories/<?= $spotDetail['spotImage'] ?>_small.jpg" media="(max-width: 720px)">
-					<source srcset="public/img/categories/<?= $spotDetail['spotImage'] ?>_medium.jpg" media="(max-width: 1024px)">
-					<img src="public/img/categories/<?= $spotDetail['spotImage'] ?>_big.jpg" alt="">
+					<source srcset="public/img/categories/<?= SPOT_IMAGE ?>_small.jpg" media="(max-width: 720px)">
+					<source srcset="public/img/categories/<?= SPOT_IMAGE ?>_medium.jpg" media="(max-width: 1024px)">
+					<img src="public/img/categories/<?= SPOT_IMAGE ?>_big.jpg" alt="">
 				</picture>
 <?php if(!$spotInFavorites): ?>
-				<a id="addToFav" class="btn" href="?page=addToFav&spotId=<?= $spotDetail['spotId']?>&memberId=<?=$_SESSION['memberId']?>">Ajouter aux favoris</a>
+				<a id="addToFav" class="btn" href="?page=addToFav&spotId=<?= SPOT_ID?>&memberId=<?=$_SESSION['memberId']?>">Ajouter aux favoris</a>
 <?php else: ?>
-				<a id="removeFromFav" class="btn" href="?page=removeFromFav&spotId=<?= $spotDetail['spotId']?>&memberId=<?=$_SESSION['memberId']?>">Enlever des favoris</a>
+				<a id="removeFromFav" class="btn" href="?page=removeFromFav&spotId=<?= SPOT_ID?>&memberId=<?=$_SESSION['memberId']?>">Enlever des favoris</a>
 <?php endif; ?>
 				<ul>
 					<li data-type='postcode' data-content="<?= $spotDetail['spotPostcode'] ?>"><p>Code postal</p><p><?= $spotDetail['spotPostcode'] ?></p></li>
@@ -24,10 +27,10 @@
 					<li data-content="<?= $spotDetail['spotDescription'] ?>" class="description"><p>Description</p><p><?= $spotDetail['spotDescription'] ?></p></li>
 				</ul>
 <?php if($updatable) :?>
-				<div><a class="btn edit" href="?page=editSpotForm&spotId=<?= $spotDetail['spotId'] ?>">Mettre à jour ce spot</a></div>
+				<div><a class="btn edit" href="?page=editSpotForm&spotId=<?= SPOT_ID ?>">Mettre à jour ce spot</a></div>
 <?php endif; ?>
 <?php if($deletable) :?>
-				<div><a class="btn delete" href="?page=deleteSpot&spotId=<?= $spotDetail['spotId'] ?>">Supprimer ce spot</a></div>
+				<div><a class="btn delete" href="?page=deleteSpot&spotId=<?= SPOT_ID ?>">Supprimer ce spot</a></div>
 <?php endif; ?>
 
 				<div class="mapContainer" id="mapContainer">

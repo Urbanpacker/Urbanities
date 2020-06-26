@@ -59,9 +59,6 @@ function deleteSpotController($spotId, $memberId, $memberIsAdmin)
     
     $favoriteSpot = checkIfFavoriteByAnyone($spotId) ;
 
-    var_dump($spotDetail);
-    die();
-
     if((!intval($spotDetail['spotVisibility']) && $spotDetail['memberId'] == $memberId ) || $memberIsAdmin){
         if($favoriteSpot){
             removeFromFav($favoriteSpot['spotId'], $favoriteSpot['memberId']);
@@ -79,7 +76,7 @@ function displaySingleSpotController($spotId, $memberId, $memberIsAdmin=0)
     
     if(!$spotDetail){
         header('Location: index.php');
-        die;    
+        die;
     }
 
     foreach($spotDetail as $key => $value){

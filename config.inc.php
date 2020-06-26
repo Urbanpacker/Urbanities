@@ -2,9 +2,10 @@
 
 // The db connecting data have been removed in order to preserve the db security
 
-const BDD_SGBD      = '***************';
-const BDD_HOST      = '***************';
-const BDD_PORT	    = '***************';
-const BDD_DATABASE  = '***************';
-const BDD_USER		= '***************';
-const BDD_PASSWORD	= '***************';
+define("HIDDEN", "*************");
+
+const BDD_SGBD      = HIDDEN;
+const BDD_HOST      = HIDDEN;
+const BDD_DATABASE  = HIDDEN;
+const BDD_USER		= HIDDEN;
+const BDD_PASSWORD	= HIDDEN; 

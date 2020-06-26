@@ -23,7 +23,6 @@ function displayMemberProfile($memberId, $memberIsAdmin)
 
 function logoutMember()
 {
-    empty($_SESSION);
     unset($_SESSION);
     session_destroy();
     header('Location: index.php');
@@ -41,6 +40,5 @@ function loginMember($memberDataConnection)
         }
         return true;
     }
-
 }
 

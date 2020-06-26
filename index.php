@@ -16,65 +16,65 @@ function checkRequiredData($dataRequired){
 
 /*******************/
 
-    if(!isset($_SESSION['memberId'])){
-        if(isset($_POST['email']) && isset($_POST['password'])){
-            if(loginMember($_POST)){
-               header('Location: index.php');
-            } else {
-                displayLoginForm(true);    
-            }
+define("SESSION_MEMBER_ID", $_SESSION['memberId']);
+define("SPOT_ID", $_GET['spotId']);
+
+if(NULL === SESSION_MEMBER_ID){
+    if(isset($_POST['email']) && isset($_POST['password'])){
+        if(loginMember($_POST)){
+           header('Location: index.php');
         } else {
-            displayLoginForm(false);    
+            displayLoginForm(true);    
         }
     } else {
-        $memberIsAdmin = intval($_SESSION['memberIsAdmin']) ;
-        $currentMemberId = $_SESSION['memberId'];
-        if(!isset($_GET['page'])){
-            displayMemberProfile($_SESSION['memberId'], $currentMemberId);
-        } else {
-            if(isset($_GET['spotId']) && (checkRequiredData([$_GET['spotId'], $currentMemberId]))){
-                switch($_GET['page']){
-                    case 'addToFav' :
-                        addToFavController($_GET['spotId'], $currentMemberId);
-                        break;
-                    case 'editSpotForm':
-                        displayEditSpotForm($_GET['spotId'], $currentMemberId, $memberIsAdmin);
-                        break;
-                    case 'spotDetail' ;
-                        displaySingleSpotController($_GET['spotId'], $currentMemberId, $memberIsAdmin);
-                        break;
-                    case 'removeFromFav':
-                        removeFromFavController($_GET['spotId'], $currentMemberId);
-                        break;
-                    case 'deleteSpot':
-                        deleteSpotController($_GET['spotId'], $currentMemberId, $memberIsAdmin);
-                        break;
-                    case 'home':
-                        displayMemberProfile($_SESSION['memberId'], $currentMemberId) ;
-                        break;
-                    default :
-                        displayMemberProfile($_SESSION['memberId'], $currentMemberId) ;
-                }
-            } else{
-                switch($_GET['page']){
-                    case 'addNewSpot':
-                        displaySpotForm($currentMemberId);
-                        break;
-                    case 'recordSpot':
-                        recordSpotController($_POST, $currentMemberId, $memberIsAdmin);
-                        break;
-                    case 'categoryList' ;
-                        displayCategories();
-                        break;
-                    case 'spotsByCategory':
-                        displaySpotsByCategory($_GET['catId'], $currentMemberId, $memberIsAdmin);
-                        break;
-                    case 'logout' ;
-                        logoutMember();
-                        break;
-                    default :
-                        displayMemberProfile($_SESSION['memberId'], $currentMemberId) ;
-                }
-            }
+        displayLoginForm(false);    
+    }
+} else {
+    $memberIsAdmin = intval($_SESSION['memberIsAdmin']) ;
+    $currentMemberId = SESSION_MEMBER_ID;
+    if(!isset($_GET['page'])){
+        displayMemberProfile(SESSION_MEMBER_ID, $currentMemberId);
+    }
+
+    if((NULL !== SPOT_ID) && (checkRequiredData([SPOT_ID, $currentMemberId]))){
+        switch($_GET['page']){
+            case 'addToFav' :
+                addToFavController(SPOT_ID, $currentMemberId);
+                break;
+            case 'editSpotForm':
+                displayEditSpotForm(SPOT_ID, $currentMemberId, $memberIsAdmin);
+                break;
+            case 'spotDetail' ;
+                displaySingleSpotController(SPOT_ID, $currentMemberId, $memberIsAdmin);
+                break;
+            case 'removeFromFav':
+                removeFromFavController(SPOT_ID, $currentMemberId);
+                break;
+            case 'deleteSpot':
+                deleteSpotController(SPOT_ID, $currentMemberId, $memberIsAdmin);
+                break;
+            default :
+                displayMemberProfile(SESSION_MEMBER_ID, $currentMemberId) ;
+        }
+    } else{
+        switch($_GET['page']){
+            case 'addNewSpot':
+                displaySpotForm($currentMemberId);
+                break;
+            case 'recordSpot':
+                recordSpotController($_POST, $currentMemberId, $memberIsAdmin);
+                break;
+            case 'categoryList' ;
+                displayCategories();
+                break;
+            case 'spotsByCategory':
+                displaySpotsByCategory($_GET['catId'], $currentMemberId, $memberIsAdmin);
+                break;
+            case 'logout' ;
+                logoutMember();
+                break;
+            default :
+                displayMemberProfile(SESSION_MEMBER_ID, $currentMemberId) ;
         }
     }
+}

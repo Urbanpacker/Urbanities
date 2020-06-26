@@ -34,9 +34,10 @@ ob_start(); ?>
 			<section class="list" id="favoriteSpots">
 				<h2>Vos spots favoris</h2>
 <?php if($favoritesSpots):
-	foreach($favoritesSpots as $spot): ?>
-				<article data-spotId="<?=$spot['spotId']?>">
-					<a href="?page=spotDetail&spotId=<?=$spot['spotId']?>"><h3><?=$spot['spotName']?></h3></a>
+	foreach($favoritesSpots as $spot): 
+		$spotId = $spot['spotId']; ?>
+				<article data-spotId="<?=$spotId?>">
+					<a href="?page=spotDetail&spotId=<?=$spotId?>"><h3><?=$spot['spotName']?></h3></a>
 					<p><?=$spot['catName']?></p>
 					<p class="postcode"><?=$spot['spotPostcode']?></p>
 					<p><?=$spot['spotAdress']?></p>
@@ -48,9 +49,10 @@ ob_start(); ?>
 			</section>
 			<section class="list" id="generalLatestSpots">
 				<h2>Derniers spots en ligne</h2>
-<?php foreach($latestSpots as $spot): ?>
-				<article data-spotId="<?=$spot['spotId']?>">
-					<a href="?page=spotDetail&spotId=<?=$spot['spotId']?>"><h3><?=$spot['spotName']?></h3></a>
+<?php foreach($latestSpots as $spot):
+	$spotId = $spot['spotId']; ?>
+				<article data-spotId="<?=$spotId?>">
+					<a href="?page=spotDetail&spotId=<?=$spotId?>"><h3><?=$spot['spotName']?></h3></a>
 					<p><?=$spot['catName']?></p>
 					<p class="postcode"><?=$spot['spotPostcode']?></p>
 					<p><?=$spot['spotAdress']?></p>
