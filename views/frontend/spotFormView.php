@@ -70,13 +70,6 @@
 					</fieldset>
 				</form>
 			</section>
-			<section>
-				<h2>Votre position actuelle</h2>
-				<div id="mapContainer">
-					<p>(Nécessite d'autoriser la géolocalisation)</p>
-					<button id="mapTrigger" class="optionButton" type="button">Cliquez ici pour afficher la carte.</button>
-				</div>
-			</section>
 <?php $content = ob_get_clean(); ?>
 <?php require('views/template.php'); ?>
 	
