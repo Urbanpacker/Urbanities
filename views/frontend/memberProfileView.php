@@ -59,12 +59,30 @@ ob_start(); ?>
 				</article>
 <?php endforeach; ?>
 			</section>
+
+			<section>
+				<h2>Rechercher une adresse</h2>
+				<!--<style> input, label, button{ flex-flow : column wrap;  margin: 5px auto; font-size: 1.6rem;} </style>
+-->				<form style="display: flex; flex-flow: column nowrap; justify-content: space-between;">
+					<p>Saisissez une adresse puis un code postal</p>
+					<label for="adress">Adresse</label>
+					<input id="adress"/>
+					<label for="postcode">Code postal (5 chiffres)</label>
+					<input id="postcode"/>
+					<button id="newAdressButton" type="submit">Saisir une nouvelle adresse</button>
+				</form>
+				<div style="margin:auto; width:100%">
+					<div class="mapContainer" id="mapContainer">
+					</div>
+				</div>
+			</section>
 			<section class="hidden" id="currentPosition">
 				<h2>Votre position actuelle</h2>
 				<button id="mapTrigger" class="optionButton" type="button">Cliquez ici pour afficher la carte.</button>
-				<div class="hidden mapContainer" id="mapContainer">
+				<div class="hidden mapContainer" id="currentPositionmapContainer">
 				</div>
 			</section>
+			<script type="module" src="public/js/moduls/adressMapper.js"></script>
 <?php $content = ob_get_clean(); ?>
 <?php require('views/template.php'); ?>
 	

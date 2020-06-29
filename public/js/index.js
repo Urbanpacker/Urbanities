@@ -73,57 +73,57 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
     /* Member Profil view dedicated function */
     /******** Getting the users's current position data**************/
-    let currentPositionBlock = document.getElementById("currentPosition");
-        function displayCurrentPosition(storedCoords){
-            let mapTrigger = document.getElementById("mapTrigger");
-            if(currentPositionBlock && mapTrigger && storedCoords){
-                currentPositionBlock.classList.remove("hidden");
-                mapTrigger.onclick = () => {
-                    new UrbanMap(MAPCONTAINER, storedCoords.latitude, storedCoords.longitude, zoomDegree);
-                    MAPCONTAINER.classList.remove("hidden");
-                    mapTrigger.classList.add("hidden)");
-                };
-            }
-            if(currentPositionBlock){
-                var storedCoords = loadDataFromDomStorage('memberPosition', 'session');
-                if(!storedCoords){
-                    var userLocation = new UserLocation();
-                    userLocation.getCurrentPosition()
-                    .then((position) => userLocation.successGeo(position))
-                    .then((coords) => {
-                        userLocation.setNewPositionIntoStorage(coords);
-                        displayCurrentPosition(coords);
-                    })
-                    .catch((error) => {
-                        userLocation.failGeo(error);
-                    });
-                } else{
-                    displayCurrentPosition(storedCoords);
-                }
+    let currentPositionBlock = document.getElementById("currentPositionmapContainer");
+    function displayCurrentPosition(storedCoords){
+        let mapTrigger = document.getElementById("mapTrigger");
+        if(currentPositionBlock && mapTrigger && storedCoords){
+            currentPositionBlock.classList.remove("hidden");
+            mapTrigger.onclick = () => {
+                new UrbanMap(MAPCONTAINER, storedCoords.latitude, storedCoords.longitude, zoomDegree);
+                MAPCONTAINER.classList.remove("hidden");
+                mapTrigger.classList.add("hidden)");
+            };
+        }
+        if(currentPositionBlock){
+            var storedCoords = loadDataFromDomStorage('memberPosition', 'session');
+            if(!storedCoords){
+                var userLocation = new UserLocation();
+                userLocation.getCurrentPosition()
+                .then((position) => userLocation.successGeo(position))
+                .then((coords) => {
+                    userLocation.setNewPositionIntoStorage(coords);
+                    displayCurrentPosition(coords);
+                })
+                .catch((error) => {
+                    userLocation.failGeo(error);
+                });
+            } else{
+                displayCurrentPosition(storedCoords);
             }
         }
+    }
     /********************************************************/
     /* SingleSpot Form dedicated functions */
-       let adressToUse = document.getElementById("adress");
-       let postcodeToUse = document.getElementById("postcode");
-       let longitude = document.getElementById("longitude");
-       let latitude = document.getElementById("latitude");
-       function getCoords(){
-           if(!adressToUse.value || !postcodeToUse.value){
-               return;
-           }
-           let place = new AdressGetter();
-           place.getCoordsFromAdress(adressToUse.value, postcodeToUse.value)
-           .then((result) => {
-               longitude.value = result.long;
-               latitude.value = result.lat;
-           })
+    let adressToUse = document.getElementById("adress");
+    let postcodeToUse = document.getElementById("postcode");
+    let longitude = document.getElementById("longitude");
+    let latitude = document.getElementById("latitude");
+    function getCoords(){
+        if(!adressToUse.value || !postcodeToUse.value){
+            return;
+        }
+        let place = new AdressGetter();
+        place.getCoordsFromAdress(adressToUse.value, postcodeToUse.value)
+        .then((result) => {
+            longitude.value = result.long;
+            latitude.value = result.lat;
+        })
         .catch((error)=>{
-            console.error(error);
-            console.warn("Impossible de récupérer les coordonnées du spot à partir de son adresse.");
+             console.error(error);
+             console.warn("Impossible de récupérer les coordonnées du spot à partir de son adresse.");
         });
-       }
-    if(document.querySelector("form")){
+    }
+    if(document.getElementById("spotForm")){
         (()=>{
             getCoords();
         })();
