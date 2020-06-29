@@ -25,13 +25,18 @@ function logoutMember()
 {
     unset($_SESSION);
     session_destroy();
+    setcookie('email', '', time() + 1, null, null, false, true);
+    setcookie('password', '', time() + 1, null, null, false, true);
     header('Location: index.php');
     die;
 }
 
-function loginMember($memberDataConnection)
-{
+function loginMember($memberDataConnection){
+    
+    //$memberDataConnection['password'] = password_hash(memberDataConnection['password'], PASSWORD_DEFAULT);
+    
     $currentMemberData = memberConnection($memberDataConnection);
+
     if(!$currentMemberData){
         return false ;
     } else{

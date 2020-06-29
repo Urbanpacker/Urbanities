@@ -20,6 +20,11 @@ function checkRequiredData($dataRequired){
     return true;
 }
 
+function setLoggedCookies($memberDataConnection){
+    setcookie('email', $memberDataConnection['email'], time() + 999*365*24*3600, null, null, false, true);
+    setcookie('password', $memberDataConnection['password'], time() + 999*365*24*3600, null, null, false, true);
+}
+
 function accessMemberArea(){
     $memberIsAdmin = intval($_SESSION['memberIsAdmin']) ;
     $currentMemberId = SESSION_MEMBER_ID;
@@ -81,21 +86,36 @@ if(NULL === SESSION_MEMBER_ID){
     }
 
     
-    if(isset($_POST['email']) && isset($_POST['password'])){
-        if(loginMember($_POST)){
-            $requiredPage = $_SESSION['pageAfterLogin'];
-            unset($_SESSION['pageAfterLogin']);
-            $requiredSpot = $_SESSION['spotAfterLogin'];
-            unset($_SESSION['spotAfterLogin']);
-            $catAfterLogin = $_SESSION['catAfterLogin'];
-            unset($_SESSION['catAfterLogin']);
-            header('Location: index.php?page='.$requiredPage.'&spotId='.$requiredSpot.'&catId='.$catAfterLogin);
-        } else {
-            displayLoginForm(true);    
-        }
+
+    if(NULL !== $_COOKIE['email'] && NULL !== $_COOKIE['password']){
+        $memberDataConnection['email'] = $_COOKIE['email'];
+        $memberDataConnection['password'] = $_COOKIE['password'];
+    } else if(NULL !== $_POST['email'] && NULL !== $_POST['password']){
+        $memberDataConnection['email'] = $_POST['email'] ;;
+        $memberDataConnection['password'] = $_POST['password'] ;;
     } else {
-        displayLoginForm(false);    
+        displayLoginForm(false);
+        return;
     }
+
+    if(loginMember($memberDataConnection)){
+        if(NULL !== $_POST['stayLogged']){
+            setLoggedCookies($memberDataConnection);
+        }
+        
+        $requiredPage = $_SESSION['pageAfterLogin'];
+        unset($_SESSION['pageAfterLogin']);
+        $requiredSpot = $_SESSION['spotAfterLogin'];
+        unset($_SESSION['spotAfterLogin']);
+        $catAfterLogin = $_SESSION['catAfterLogin'];
+        unset($_SESSION['catAfterLogin']);
+        
+        
+        header('Location: index.php?page='.$requiredPage.'&spotId='.$requiredSpot.'&catId='.$catAfterLogin);
+    } else {
+        displayLoginForm(true);
+        return;    
+    }     
 } else {
     accessMemberArea();    
 }
