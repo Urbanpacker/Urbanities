@@ -95,7 +95,7 @@ if(NULL === SESSION_MEMBER_ID){
         $memberDataConnection['password'] = $_POST['password'] ;;
     } else {
         displayLoginForm(false);
-        return;
+        die();
     }
 
     if(loginMember($memberDataConnection)){
@@ -110,11 +110,19 @@ if(NULL === SESSION_MEMBER_ID){
         $catAfterLogin = $_SESSION['catAfterLogin'];
         unset($_SESSION['catAfterLogin']);
         
-        
-        header('Location: index.php?page='.$requiredPage.'&spotId='.$requiredSpot.'&catId='.$catAfterLogin);
+        $page = $requiredPage === 'login' ? 'page=home' : 'page='.$requiredPage ;
+       
+        $spot = $requiredSpot === NULL ? '' : '&spotId='.$requiredSpot;
+
+        $category = $catAfterLogin === NULL ? '' : '&catId='.$catAfterLogin;
+
+        $adress = $page.$spot.$category ;
+
+        header('Location: index.php?'.$adress);
+        die();
     } else {
         displayLoginForm(true);
-        return;    
+        die();
     }     
 } else {
     accessMemberArea();    
