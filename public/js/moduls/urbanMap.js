@@ -84,7 +84,30 @@
 			}	
 		}
 
-		saveCoordsToDOMStorage = () => {
+		saveAdressToDOMStorage = (keyName, adress, postcode) => {
+			let savedAdresses = loadDataFromDomStorage("savedAdresses", "session");
+			removeDataFromDomStorage("savedAdresses", "session");
+			let adressPresentInStorage = false;
+			/*If the DOM storage is empty, we create a new array with the current adress as a first element */
+			if(savedAdresses === null){
+				savedAdresses = [];
+				savedAdresses.push({adress : adress, postcode : postcode});
+			} else{
+			/* We check that the current adress has not been saved in the DOM storage yet */
+				for(let i = 0, c = savedAdresses.length ; i < c ; i++){
+					if(((savedAdresses[i].adress === adress) && (savedAdresses[i].postcode === postcode))){
+						adressPresentInStorage = true ;		
+					}
+				}
+			/* If the current position has not been stored, we put it into the storage */
+				if(!adressPresentInStorage){
+					savedAdresses.push({adress : adress, postcode : postcode})
+				}
+			}
+			saveDataToDomStorage(keyName, savedAdresses, "session");
+		}
+
+		saveCoordsToDOMStorage = (keyName) => {
 			let savedCoords = loadDataFromDomStorage("savedCoords", "session");
 			removeDataFromDomStorage("savedCoords", "session");
 			let coordsPresentInStorage = false;
@@ -104,7 +127,7 @@
 					savedCoords.push({lat : this.coords.lat, long : this.coords.long})
 				}
 			}
-			saveDataToDomStorage("savedCoords", savedCoords, "session");
+			saveDataToDomStorage(keyName, savedCoords, "session");
 		}
 
 		setTileLayer = () => {

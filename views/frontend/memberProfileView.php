@@ -59,10 +59,26 @@ ob_start(); ?>
 				</article>
 <?php endforeach; ?>
 			</section>
+
+			<section id="displayMapFromAdress">
+				<form>
+					<h2>Afficher une adresse sur une carte</h2>
+					<p>Saisissez une adresse puis un code postal</p>
+					<label for="adressMap">Adresse</label>
+					<input id="adressMap"/>
+					<label for="postcodeMap">Code postal (5 chiffres)</label>
+					<input id="postcodeMap"/>
+					<button id="newAdressButton" class="optionButton hidden" type="submit">Nouvelle recherche.</button>
+				</form>
+					<div class ="hidden mapContainer" style="height:500px; width:100%; border:solid 2px black;" id="displayMapFromAdressContainer">
+					</div>
+			</section>
+			
+
 			<section class="hidden" id="currentPosition">
 				<h2>Votre position actuelle</h2>
 				<button id="mapTrigger" class="optionButton" type="button">Cliquez ici pour afficher la carte.</button>
-				<div class="hidden mapContainer" id="mapContainer">
+				<div class="hidden mapContainer" id="currentPositionmapContainer">
 				</div>
 			</section>
 <?php $content = ob_get_clean(); ?>

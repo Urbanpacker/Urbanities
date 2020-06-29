@@ -33,7 +33,7 @@ ob_start(); ?>
 				<div><a class="btn delete" href="?page=deleteSpot&spotId=<?= SPOT_ID ?>">Supprimer ce spot</a></div>
 <?php endif; ?>
 
-				<div class="mapContainer" id="mapContainer">
+				<div class="mapContainer" id="displaySpotMapContainer">
 				</div>
 			</section>
 <?php $content = ob_get_clean(); ?>

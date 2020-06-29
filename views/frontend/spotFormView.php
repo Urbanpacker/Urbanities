@@ -4,7 +4,7 @@
 	define("SPOT_EXISTING_DATA_COUNTRY_NAME", $spotExistingData['countryName']);
 	define("SPOT_EXISTING_DATA_VISIBILITY", $spotExistingData['spotVisibility']);
 ?>
-			<section class="form">
+			<section id="sportForm" class="form">
 				<h1><?= $h1 ?></h1>
 				<form class="" method="post" action ="?page=recordSpot">
 					<input type="hidden" id="memberId" name="memberId" value="<?= $authorId ?>"/>
