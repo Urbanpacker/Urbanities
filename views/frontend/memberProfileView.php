@@ -60,6 +60,7 @@ ob_start(); ?>
 <?php endforeach; ?>
 			</section>
 
+<<<<<<< HEAD
 			<section>
 				<h2>Rechercher une adresse</h2>
 				<!--<style> input, label, button{ flex-flow : column wrap;  margin: 5px auto; font-size: 1.6rem;} </style>
@@ -76,6 +77,23 @@ ob_start(); ?>
 					</div>
 				</div>
 			</section>
+=======
+			<section id="displayMapFromAdress">
+				<form>
+					<h2>Afficher une adresse sur une carte</h2>
+					<p>Saisissez une adresse puis un code postal</p>
+					<label for="adressMap">Adresse</label>
+					<input id="adressMap"/>
+					<label for="postcodeMap">Code postal (5 chiffres)</label>
+					<input id="postcodeMap"/>
+					<button id="newAdressButton" class="optionButton hidden" type="submit">Nouvelle recherche.</button>
+				</form>
+					<div class ="hidden mapContainer" style="height:500px; width:100%; border:solid 2px black;" id="displayMapFromAdressContainer">
+					</div>
+			</section>
+			
+
+>>>>>>> master
 			<section class="hidden" id="currentPosition">
 				<h2>Votre position actuelle</h2>
 				<button id="mapTrigger" class="optionButton" type="button">Cliquez ici pour afficher la carte.</button>
