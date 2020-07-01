@@ -7,128 +7,125 @@ import * as Form from "./moduls/form.js" ;
 
 /*********** FUNCTIONS ****************/
 
-window.addEventListener('DOMContentLoaded', ()=>{
+const zoomDegree = 15;
 
-    const zoomDegree = 15;
-    
-    const displayMap = (mapContainer, inputCoords) => {
-		if(!mapContainer || !inputCoords){return}
-        let spotMap ;
-		if(inputCoords.lat && inputCoords.long){
-			spotMap = new UrbanMap(mapContainer, inputCoords.lat, inputCoords.long, zoomDegree);
-		}else{
-			let place = new AdressGetter();
-			place.getCoordsFromAdress(adress, postcode)
-			.then((coords) => {
-                spotMap = new UrbanMap(mapContainer, coords.lat, coords.long, zoomDegree);
-			})
-			.catch((error)=>{
-				console.error(error);
-				console.warn("Impossible de récupérer les coordonnées du spot à partir de son adresse.");
-			});
-        }
-        
+const displayMap = (mapContainer, inputCoords) => {
+    if(!mapContainer || !inputCoords){return}
+    let spotMap ;
+    if(inputCoords.lat && inputCoords.long){
+        spotMap = new UrbanMap(mapContainer, inputCoords.lat, inputCoords.long, zoomDegree);
+    }else{
+        let place = new AdressGetter();
 
-		if(spotMap instanceof UrbanMap){
-
-            removeDataFromDomStorage("savedAdresses", "session");
-            if(document.getElementById("displayMapFromAdress")){
-                spotMap.saveAdressToDOMStorage("savedAdresses", inputCoords.adress, inputCoords.postCode);
-            }
-
-			let saveCoords = document.createElement("button");
-			saveCoords.innerText ="Sauver la position";
-            saveCoords.classList.add("optionButton");
-            saveCoords.style = "margin: 0 auto 15px ; maxWidth:50%; display:block";
-            saveCoords.onclick = () => {
-				spotMap.saveCoordsToDOMStorage("savedCoords");
-			};
-
-			let tilelayerMenu = spotMap.selectMapMenu;
-			tilelayerMenu.style.maxWidth ="80%";
-			tilelayerMenu.style.margin="15px 0px"
-            tilelayerMenu.style.textAlign="center";
-            insertBeforeElem(tilelayerMenu, mapContainer);
-
-        }
-        return spotMap ;
+        place.getCoordsFromAdress(inputCoords.adress, inputCoords.postcode)
+        .then((coords) => {
+            spotMap = new UrbanMap(mapContainer, coords.lat, coords.long, zoomDegree);
+        })
+        .catch((error)=>{
+            console.error(error);
+            console.warn("Impossible de récupérer les coordonnées du spot à partir de son adresse.");
+        });
     }
 
-	/* SingleSpot Displayer dedicated function */
-	(()=>{
-        const mapContainer = document.getElementById("displaySpotMapContainer");
-		const detailItem = document.getElementById("detailItem");    
-		if(!mapContainer || !detailItem){return}
-		let fields = document.querySelectorAll("li[data-type]");
-		var coords = {
-            postcode : null,
-            adress : null,
-			lat : null,
-			long : null
-		};
+    if(spotMap instanceof UrbanMap){
 
-		for (let field of fields){
-			if(field.dataset.type == "latitude"){
-				if((field.dataset.content !== "") && (field.dataset.content !== "Inconnue")){
-					coords.lat = field.dataset.content ;
-				}
-			}
-			if(field.dataset.type == "longitude"){
-				if((field.dataset.content !== "") && (field.dataset.content !== "Inconnue")){
-					coords.long = field.dataset.content ;
-				}
-			}
-			if(field.dataset.type == "postcode"){
-				coords.postcode = field.dataset.content;
-			}
-			if(field.dataset.type == "adress"){
-				coords.adress = field.dataset.content;
-			}
+        removeDataFromDomStorage("savedAdresses", "session");
+        if(document.getElementById("displayMapFromAdress")){
+            spotMap.saveAdressToDOMStorage("savedAdresses", inputCoords.adress, inputCoords.postCode);
         }
-        displayMap(mapContainer, coords);
-    
-	})();
 
-	/* Member Profil view dedicated function */
-	/******** Getting the users's current position data**************/
-	
-	let currentPositionBlock = document.getElementById("currentPosition");
-	
-	function displayCurrentPosition(storedCoords){
-        const mapContainer = document.getElementById("currentPositionmapContainer")
-		let mapTrigger = document.getElementById("mapTrigger");
-		if(currentPositionBlock && mapTrigger && storedCoords){
-			currentPositionBlock.classList.remove("hidden");
-			mapTrigger.onclick = () => {
-				new UrbanMap(mapContainer, storedCoords.latitude, storedCoords.longitude, zoomDegree);
-				mapContainer.classList.remove("hidden");
-				mapTrigger.classList.add("hidden)");
-			};
-		}	
-	}
+        let saveCoords = document.createElement("button");
+        saveCoords.innerText ="Sauver la position";
+        saveCoords.classList.add("optionButton");
+        saveCoords.style = "margin: 0 auto 15px ; maxWidth:50%; display:block";
+        saveCoords.onclick = () => {
+            spotMap.saveCoordsToDOMStorage("savedCoords");
+        };
 
-	if(currentPositionBlock){
-		var storedCoords = loadDataFromDomStorage('memberPosition', 'session');
-		if(!storedCoords){
-			var userLocation = new UserLocation();
-			userLocation.getCurrentPosition()
-			.then((position) => userLocation.successGeo(position))
-			.then((coords) => {
-				userLocation.setNewPositionIntoStorage(coords);
-				displayCurrentPosition(coords);
-			})
-			.catch((error) => {
-				userLocation.failGeo(error);
-			});
-		} else{
-			displayCurrentPosition(storedCoords);
+        let tilelayerMenu = spotMap.selectMapMenu;
+        tilelayerMenu.style.maxWidth ="80%";
+        tilelayerMenu.style.margin="15px 0px"
+        tilelayerMenu.style.textAlign="center";
+        insertBeforeElem(tilelayerMenu, mapContainer);
+
+    }
+    return spotMap ;
+}
+
+/* SingleSpot Displayer dedicated function */
+if(document.getElementById("detailItem")){
+	let fields = document.querySelectorAll("[data-type]");
+	const coords = {
+        postcode : null,
+        adress : null,
+		lat : null,
+		long : null
+	};
+	for (let field of fields){
+		if(field.dataset.type == "latitude"){
+			if((field.dataset.content !== "") && (field.dataset.content !== "Inconnue")){
+				coords.lat = field.dataset.content ;
+			}
 		}
-    }
+		if(field.dataset.type == "longitude"){
+			if((field.dataset.content !== "") && (field.dataset.content !== "Inconnue")){
+				coords.long = field.dataset.content ;
+			}
+		}
+		if(field.dataset.type == "postcode"){
+			coords.postcode = field.dataset.content;
+		}
+		if(field.dataset.type == "adress"){
+			coords.adress = field.dataset.content;
+		}
+       }
+       const mapContainer = document.getElementById("displaySpotMapContainer");
+       if(null !== mapContainer){
+           displayMap(mapContainer, coords);
+       }
+}
+
+/* Member Profil view dedicated function */
+/******** Getting the users's current position data**************/
+	
+let currentPositionBlock = document.getElementById("currentPosition");
+	
+function displayCurrentPosition(storedCoords){
+       const mapContainer = document.getElementById("currentPositionmapContainer")
+	let mapTrigger = document.getElementById("mapTrigger");
+	if(currentPositionBlock && mapTrigger && storedCoords){
+		currentPositionBlock.classList.remove("hidden");
+		mapTrigger.onclick = () => {
+			new UrbanMap(mapContainer, storedCoords.latitude, storedCoords.longitude, zoomDegree);
+			mapContainer.classList.remove("hidden");
+			mapTrigger.classList.add("hidden)");
+		};
+	}	
+}
+
+if(currentPositionBlock){
+	const storedCoords = loadDataFromDomStorage('memberPosition', 'session');
+	if(!storedCoords){
+		var userLocation = new UserLocation();
+		userLocation.getCurrentPosition()
+		.then((position) => userLocation.successGeo(position))
+		.then((coords) => {
+			userLocation.setNewPositionIntoStorage(coords);
+			displayCurrentPosition(coords);
+		})
+		.catch((error) => {
+			userLocation.failGeo(error);
+		});
+	} else{
+		displayCurrentPosition(storedCoords);
+	}
+}
     
     /********** Display map with marker from adress input in a form *****************/
-    (()=>{
-        const mapContainer = document.getElementById("displayMapFromAdressContainer");
-        if(null === mapContainer){return};
+window.addEventListener('DOMContentLoaded', ()=>{
+    const displayMapFromAdress = (container) => {
+        const mapContainer = document.getElementById(container);
+        if(null === mapContainer){return}
         mapContainer.classList.add("hidden");
         
         const newAdressButton = document.getElementById("newAdressButton") ;
@@ -206,66 +203,54 @@ window.addEventListener('DOMContentLoaded', ()=>{
                 checkFormData();
         });
         
-/*        form.addEventListener("submit", (e)=>{
-            e.preventDefault();
-            removeDataFromDomStorage("savedCoords", "session");
-            removeDataFromDomStorage("savedAdresses", "session");
-        }) 
-*/
-    
         newAdressButton.addEventListener("click", (e)=>{
             e.preventDefault();
             removeDataFromDomStorage("savedCoords", "session");
             removeDataFromDomStorage("savedAdresses", "session");
             location.reload();
         });
-
         
+    };
 
-        
-    })();
-
-    
-
-
-
-
-
-
+    displayMapFromAdress("displayMapFromAdressContainer");
 	/********************************************************/
+});    
+    /* SingleSpot Form dedicated functions */   
 
-	/* SingleSpot Form dedicated functions */        
-    let adressToUse = document.getElementById("adress");
-    let postcodeToUse = document.getElementById("postcode");
-    let longitude = document.getElementById("longitude");
-    let latitude = document.getElementById("latitude");
-          
-    function getCoords(){
-        if(!adressToUse.value || !postcodeToUse.value){
-            return;
+window.addEventListener('DOMContentLoaded', ()=>{
+    if(document.getElementById("sportForm")){
+
+        let adressToUse = document.getElementById("adress");
+        let postcodeToUse = document.getElementById("postcode");
+        let longitude = document.getElementById("longitude");
+        let latitude = document.getElementById("latitude");
+            
+        function getCoords(){
+            if(adressToUse.value.trim().length < 3 || postcodeToUse.value.trim().length !== 5){
+                return;
+            }
+            let place = new AdressGetter();
+            place.getCoordsFromAdress(adressToUse.value, postcodeToUse.value)
+            .then((result) => {
+                console.log(result);
+                longitude.value = result.long;
+                latitude.value = result.lat;
+            })
+            .catch((error)=>{
+                //console.error(error);
+                console.warn("Impossible de récupérer les coordonnées du spot à partir de son adresse.");
+            });	
         }
-        let place = new AdressGetter();
-        place.getCoordsFromAdress(adressToUse.value, postcodeToUse.value)
-        .then((result) => {
-            longitude.value = result.long;
-            latitude.value = result.lat;
-        })
-	    .catch((error)=>{
-	        console.error(error);
-	        console.warn("Impossible de récupérer les coordonnées du spot à partir de son adresse.");
-	    });	
-    }
-    
-    if(document.querySelector("spotForm")){
-        (()=>{
-            getCoords();				
-        })();
-        adressToUse.addEventListener("blur", ()=>{
-            getCoords();	
-        });
-        postcodeToUse.addEventListener("blur", ()=>{
-            getCoords();
-        });
+        
+            (()=>{
+                getCoords();				
+            })();
+            adressToUse.addEventListener("input", ()=>{
+                getCoords();	
+            });
+            postcodeToUse.addEventListener("input", ()=>{
+                getCoords();
+            });
     }
 });
     
