@@ -5,9 +5,10 @@
 				richer : "http://a.tile.openstreetmap.fr/osmfr/{z}/{x}/	{y}.png",
 				cycloMap : "https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
 				hikeBike : "https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png",
-				waterColor : "http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg",
 				humanitarian : "http://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
-				toner : "http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png",
+                toner : "http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png",
+                waterColor : "http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg",
+                terrain : "http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg",
 			/*	neighbourhood : "https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png",
 				landscape : "http://tile3.opencyclemap.org/landscape/{z}/{x}/{y}.png",
 				transport : "http://tile2.opencyclemap.org/transport/{z}/{x}/{y}.png",
@@ -57,11 +58,20 @@
 			/* Initializes a OSM Map with options */
 			this.leafletMap = L.map(this.mapContainer.id).setView(this.zoomPoint, this.zoomDegree);
 			this.mapContainer.classList.add("map");
-			/* Loads the OSM tileLayer (map background) */
-			L.tileLayer(tileLayer,{
-				maxzoom:19,
-				attribution:'(c)<a href="http://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
-			}).addTo(this.leafletMap);
+            /* Loads the OSM tileLayer (map background) */
+            // Loads specifically the Stamen TileLayers
+            if(tileLayer.indexOf("tile.stamen.com") !== -1 ){
+                const stamenLayerType = tileLayer.substring(tileLayer.indexOf("tile.stamen.com")+16, tileLayer.indexOf("/{"));
+                var layer = new L.StamenTileLayer(stamenLayerType);
+                this.leafletMap.addLayer(layer);
+            } else { // Loads the standard tilayers
+                L.tileLayer(tileLayer,{
+                    maxzoom:19,
+                    attribution:`(c)<a href="http://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>
+                    Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>`
+                }).addTo(this.leafletMap);
+            }
+			
 		}
 
 		addPosition(position){
