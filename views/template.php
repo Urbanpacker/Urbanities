@@ -10,7 +10,7 @@
 		<!--- Loads Leaflet stylesheet and JS API and for the inclusion of an OSM Map -->
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css">
 		<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
-		<script src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
+	<!--	<script src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script> -->
 		<!--Personnal CSS -->
 		<link rel="stylesheet" href="public/css/style.css">
 		<!--Personnal scripts-->
