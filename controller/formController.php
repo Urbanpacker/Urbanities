@@ -11,7 +11,8 @@ function displayLoginForm($invalidLogin = false)
 
 function displayEditSpotForm($spotId, $memberId, $memberIsAdmin)
 {
-    $spotToEdit = getSingleSpot($spotId, $memberId, $memberIsAdmin);
+    $spotManager = new SpotManager();
+    $spotToEdit = $spotManager->getSingleSpot($spotId, $memberId, $memberIsAdmin);
     
     if(!$spotToEdit){
         header('Location: index.php');
@@ -27,14 +28,16 @@ function displayEditSpotForm($spotId, $memberId, $memberIsAdmin)
 
 function displaySpotForm($memberId, $spotData = null)
 {
-    $categories = getCategories() ;
+    $categoryManager = new CategoryManager();
+    $categories = $categoryManager->getCategories() ;
     for($i = 0, $c = count($categories); $i < $c ; ++$i){
         foreach($categories[$i] as $key => $value){
             $categories[$i][$key] = htmlspecialchars($value) ;
         }
     }
     
-    $countries = getCountries();
+    $countryManager = new CountryManager();
+    $countries = $countryManager->getCountries();
     for($i = 0, $c = count($countries); $i < $c ; ++$i){
         foreach($countries[$i] as $key => $value){
             $countries[$i][$key] = htmlspecialchars($value) ;
