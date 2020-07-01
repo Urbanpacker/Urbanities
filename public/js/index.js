@@ -6,12 +6,8 @@ import {AdressGetter} from "./moduls/adressGetter.js" ;
 import * as Form from "./moduls/form.js" ;
 
 /*********** FUNCTIONS ****************/
-<<<<<<< HEAD
-window.addEventListener('DOMContentLoaded', ()=>{
-=======
 
 const zoomDegree = 15;
->>>>>>> master
 
 const displayMap = (mapContainer, inputCoords) => {
     if(!mapContainer || !inputCoords){return}
@@ -26,7 +22,7 @@ const displayMap = (mapContainer, inputCoords) => {
             spotMap = new UrbanMap(mapContainer, coords.lat, coords.long, zoomDegree);
         })
         .catch((error)=>{
-            console.error(error);
+            //console.error(error);
             console.warn("Impossible de récupérer les coordonnées du spot à partir de son adresse.");
         });
     }
@@ -163,7 +159,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
                 let place = new AdressGetter();
                 place.getCoordsFromAdress(adress, postcode)
                 .catch((error)=>{
-                    console.error(error);
+                    //console.error(error);
                     console.warn("Impossible de récupérer les coordonnées de l'emplacement à partir de son adresse.");
                 })
                 .then((coords) => {
@@ -236,7 +232,6 @@ window.addEventListener('DOMContentLoaded', ()=>{
             let place = new AdressGetter();
             place.getCoordsFromAdress(adressToUse.value, postcodeToUse.value)
             .then((result) => {
-                console.log(result);
                 longitude.value = result.long;
                 latitude.value = result.lat;
             })

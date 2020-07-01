@@ -132,37 +132,6 @@ class UrbanMap{
         let preferedMap = loadDataFromDomStorage("preferedMapTileLayer", "local") || 0;
         this.mapTileLayer = tileLayers[preferedMap];
 
-<<<<<<< HEAD
-        /****Scrolling menu to choose a map tilelayer */
-        let selectMapMenu = document.createElement("select");
-        let optNumber = 0 ;
-        for(let prop in this.mapTileLayers){
-            let opt = document.createElement("option");
-            opt.value = optNumber;
-            opt.innerText = ucFirst(prop);
-            if(optNumber === preferedMap){
-                opt.setAttribute("selected", "");
-            }
-            selectMapMenu.appendChild(opt);
-            ++optNumber;
-        }
-        this.selectMapMenu = selectMapMenu;
-        /* Event listener watching the change of map tilelayer by the user. On change, replace the preferred tile layer in the local DOM Storage */
-        selectMapMenu.onchange = (e) => {
-            let preferedMapTileLayer = 0;
-            for (let i =0, c = tileLayers.length ; i< c ; i++){
-                if(i === e.target.selectedIndex){
-                    preferedMapTileLayer = i;
-                }
-            }
-            removeDataFromDomStorage("preferedMapTileLayer", "local");
-            saveDataToDomStorage("preferedMapTileLayer", preferedMapTileLayer, "local");
-            location.reload(true);
-        };
-    }
-}
-export {UrbanMap};
-=======
 		setOSMMap = (tileLayer = this.mapTileLayers.default) => {
 			/* Checks that a container has been set*/
 			if(!this.mapContainer){
@@ -293,4 +262,3 @@ export {UrbanMap};
 	}
 
 	export {UrbanMap};
->>>>>>> master
