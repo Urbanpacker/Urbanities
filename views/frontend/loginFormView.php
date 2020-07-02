@@ -24,9 +24,10 @@ ob_start(); ?>
     			<button id="cancel" type="reset">
     			Annuler</button>
     		</li>
+			
     		</ul>
     		</fieldset>
-
+			<div><a href="index.php?page=addNewMember">Créer un compte</a></div>
     	</form>
     	
 <?php if($invalidLogin):?>

@@ -1,4 +1,13 @@
 <?php
+
+function debug($var){
+    echo "<pre>";
+    var_dump($var);
+    echo "</pre>";
+    die();
+}
+
+
 try{
 
     session_start();
@@ -24,7 +33,7 @@ try{
         setcookie('email', $memberDataConnection['email'], time() + 999*365*24*3600, null, null, false, true);
         setcookie('password', $memberDataConnection['password'], time() + 999*365*24*3600, null, null, false, true);
     }
-
+    
     function accessMemberArea(){
         $memberIsAdmin = intval($_SESSION['memberIsAdmin']) ;
         $currentMemberId = SESSION_MEMBER_ID;
@@ -72,58 +81,62 @@ try{
     }
 
     if(NULL === SESSION_MEMBER_ID){
-
-        if(NULL === $_SESSION['pageAfterLogin']){
-            $_SESSION['pageAfterLogin'] = $_GET['page'];
-        }
-
-        if(NULL === $_SESSION['spotAfterLogin']){
-            $_SESSION['spotAfterLogin'] = $_GET['spotId'];
-        }
-
-        if(NULL === $_SESSION['catAfterLogin']){
-            $_SESSION['catAfterLogin'] = $_GET['catId'];
-        }
-
-        
-
-        if(NULL !== $_COOKIE['email'] && NULL !== $_COOKIE['password']){
-            $memberDataConnection['email'] = $_COOKIE['email'];
-            $memberDataConnection['password'] = $_COOKIE['password'];
-        } else if(NULL !== $_POST['email'] && NULL !== $_POST['password']){
-            $memberDataConnection['email'] = $_POST['email'] ;
-            $memberDataConnection['password'] = $_POST['password'] ;
+        if($_GET ['page'] === 'addNewMember'){
+            displayMemberForm();
+        } elseif($_REQUEST['page'] === 'recordMember'){
+            recordMemberController($_POST);    
         } else {
-            displayLoginForm(false);
-            die();
-        }
-
-        if(loginMember($memberDataConnection)){
-            if(NULL !== $_POST['stayLogged']){
-                setLoggedCookies($memberDataConnection);
+            if(NULL === $_SESSION['pageAfterLogin']){
+                $_SESSION['pageAfterLogin'] = $_GET['page'];
             }
+
+            if(NULL === $_SESSION['spotAfterLogin']){
+                $_SESSION['spotAfterLogin'] = $_GET['spotId'];
+            }
+
+            if(NULL === $_SESSION['catAfterLogin']){
+                $_SESSION['catAfterLogin'] = $_GET['catId'];
+            }
+
+            if(NULL !== $_COOKIE['email'] && NULL !== $_COOKIE['password']){
+                $memberDataConnection['email'] = $_COOKIE['email'];
+                $memberDataConnection['password'] = $_COOKIE['password'];
+            } else if(NULL !== $_POST['email'] && NULL !== $_POST['password']){
+                $memberDataConnection['email'] = $_POST['email'] ;
+                $memberDataConnection['password'] = $_POST['password'] ;
+            } else {
+                displayLoginForm(false);
+                die();
+            }
+
+            if(loginMember($memberDataConnection)){
+                if($_POST['stayLogged']){
+                    setLoggedCookies($memberDataConnection);
+                }
+                
+                $requiredPage = $_SESSION['pageAfterLogin'];
+                unset($_SESSION['pageAfterLogin']);
+                $requiredSpot = $_SESSION['spotAfterLogin'];
+                unset($_SESSION['spotAfterLogin']);
+                $catAfterLogin = $_SESSION['catAfterLogin'];
+                unset($_SESSION['catAfterLogin']);
+                
+                $page = $requiredPage === 'login' ? 'page=home' : 'page='.$requiredPage ;
             
-            $requiredPage = $_SESSION['pageAfterLogin'];
-            unset($_SESSION['pageAfterLogin']);
-            $requiredSpot = $_SESSION['spotAfterLogin'];
-            unset($_SESSION['spotAfterLogin']);
-            $catAfterLogin = $_SESSION['catAfterLogin'];
-            unset($_SESSION['catAfterLogin']);
-            
-            $page = $requiredPage === 'login' ? 'page=home' : 'page='.$requiredPage ;
-        
-            $spot = $requiredSpot === NULL ? '' : '&spotId='.$requiredSpot;
+                $spot = $requiredSpot === NULL ? '' : '&spotId='.$requiredSpot;
 
-            $category = $catAfterLogin === NULL ? '' : '&catId='.$catAfterLogin;
+                $category = $catAfterLogin === NULL ? '' : '&catId='.$catAfterLogin;
 
-            $adress = $page.$spot.$category ;
+                $adress = $page.$spot.$category ;
 
-            header('Location: index.php?'.$adress);
-            die();
-        } else {
-            displayLoginForm(true);
-            die();
-        }     
+                header('Location: index.php?'.$adress);
+                die();
+            } else {
+                displayLoginForm(true);
+                die();
+            }     
+
+        }    
     } else {
             accessMemberArea();    
     }
