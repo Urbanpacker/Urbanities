@@ -74,12 +74,6 @@ function logoutMember()
 
 function loginMember($memberDataConnection){
     
-    	/*
-    $pass_exist = $bdd->prepare('SELECT pass FROM membres WHERE pseudo= :pseudo');
-    $pass_exist->execute(array('pseudo' => $pseudo));
-    $resultat = $pass_exist->fetch();
-    $resultat2 = password_verify($password,$resultat['pass']);
-*/
     $member = new Member();
 
     $currentMemberData = $member->memberConnection($memberDataConnection['email']);
@@ -96,4 +90,3 @@ function loginMember($memberDataConnection){
         return true;
     }
 }
-
