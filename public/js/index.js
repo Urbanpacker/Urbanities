@@ -248,7 +248,12 @@ window.addEventListener('DOMContentLoaded', ()=>{
                 getCoords();	
             });
             postcodeToUse.addEventListener("input", ()=>{
-                getCoords();
+                // Limit the length of the postcode field intput to 5 characters
+                postcodeToUse.value = postcodeToUse.value.trim().length > 5 ? postcodeToUse.value.substring(0,5) : postcodeToUse.value.trim(); 
+                let postCodePattern = /[0-9]{5}/;
+                    if(postCodePattern.test(postcodeToUse.value)){
+                        getCoords();
+                    }
             });
     }
 });
