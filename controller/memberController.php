@@ -25,7 +25,7 @@ function recordMemberController($memberData)
         }
     }
 
-    $memberData[PASSWORD] = password_hash($memberData[PASSWORD], PASSWORD_DEFAULT);
+    $memberData['password'] = password_hash($memberData['password'], PASSWORD_DEFAULT);
 
     if($completedForm){
         $member = new Member();
@@ -74,14 +74,22 @@ function logoutMember()
 
 function loginMember($memberDataConnection){
     
-    $memberDataConnection[PASSWORD] = password_hash($memberDataConnection[PASSWORD], PASSWORD_DEFAULT);
-    
+    	/*
+    $pass_exist = $bdd->prepare('SELECT pass FROM membres WHERE pseudo= :pseudo');
+    $pass_exist->execute(array('pseudo' => $pseudo));
+    $resultat = $pass_exist->fetch();
+    $resultat2 = password_verify($password,$resultat['pass']);
+*/
     $member = new Member();
-    $currentMemberData = $member->memberConnection($memberDataConnection);
 
-    if(!$currentMemberData){
+    $currentMemberData = $member->memberConnection($memberDataConnection['email']);
+
+    $authSuccess = password_verify($memberDataConnection['password'], $currentMemberData['memberPassword']);
+
+    if(!$authSuccess){
         return false ;
     } else{
+        $member->recordConnectionTimestamp($currentMemberData['memberId']);
         foreach($currentMemberData as $key => $value){
             $_SESSION[$key] = htmlspecialchars($value);
         }

@@ -90,7 +90,7 @@ class Member extends Manager
 	}
 
 
-	function memberConnection($memberDataConnection)
+	function memberConnection($memberEmail)
 	{
 		$db = self::dbConnect();
 		$memberData = $db->prepare(
@@ -102,6 +102,7 @@ class Member extends Manager
 				memberPseudo,
 				memberEmail,
 				memberPostcode,
+				memberPassword,
 				DATE_FORMAT(
 					memberCreationTimestamp,
 					"%d/%m/%Y à %Hh%i"
@@ -117,24 +118,25 @@ class Member extends Manager
 			INNER JOIN
 				Country ON Members.fk_countryId = Country.countryId
 			WHERE
-				memberEmail = :email AND memberPassword = :password
+				memberEmail = ?
 			');
-		$memberData->execute($memberDataConnection);
-		
-		$timestampConnection = $db->prepare(
-			'
-			UPDATE
-				Members
-			SET
-				memberLastConnection = NOW()
-			WHERE
-				memberEmail = :email AND memberPassword = :password
-			'
-		);
-		$timestampConnection->execute($memberDataConnection);
-		$timestampConnection->closeCursor();
+		$memberData->execute([$memberEmail]);
 		
 		return $memberData->fetch();
 	}
 
+	function recordConnectionTimestamp($memberId){
+		$db = self::dbConnect();
+		$timestampConnection = $db->prepare(
+			'UPDATE
+				Members
+			SET
+				memberLastConnection = NOW()
+			WHERE
+				memberId = ?
+			'
+		);
+		$timestampConnection->execute([$memberId]);
+		$timestampConnection->closeCursor();
+	}
 }
