@@ -126,30 +126,28 @@ function textAreaLengthCount(){
 /* ************************************** MAIN CODE *************************************** */
 /*************************************************************************************************/
 
-window.addEventListener('DOMContentLoaded', (function(){
+window.addEventListener('DOMContentLoaded', (()=>{
 	
-	var fields = document.querySelectorAll('input, textarea, select');
-	var submitForm = document.querySelector("button[type='submit']");
-	var resetForm = document.querySelector("button[type='reset']");
-
+	const fields = document.querySelectorAll('input, textarea, select');
+	const submitForm = document.querySelector("button[type='submit']");
+	const resetForm = document.querySelector("button[type='reset']");
+	const loginForm = document.getElementById("loginForm");
 	
 // Listeners on focus / blur events to check filling of required fields and  data format
 	if(fields.length>0){
-		for(let i = 0, c = fields.length ; i < c ; ++i){
-			switch(fields[i].id){
-				case "email" :
-					fields[i].value = "test@yopmail.com";
-					break;
-				case "password" :
-					fields[i].value = "testtest";
-					break;
+		for(let field of fields){
+			if(null !== loginForm){
+				switch(field.id){
+					case "email" :
+						field.value = "test@yopmail.com";
+						break;
+					case "password" :
+						field.value = "testtest";
+						break;
+				}
 			}
-			fields[i].addEventListener('focus', function(){
-			// Remove JS border of the input when focused to set back the :focused border already defined in the CSS
-				this.style.border='';
-			});
 			// Triggers controls of integrity of input data when blur
-			fields[i].addEventListener('blur', checkDataOnBlur);
+			field.addEventListener('blur', checkDataOnBlur);
 		}
 	}
 

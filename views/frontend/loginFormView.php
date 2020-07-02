@@ -1,6 +1,6 @@
 <?php
 ob_start(); ?>
-	<section class="form">
+	<section id="loginForm" class="form">
     	<h3>Veuillez vous connecter afin d'accéder à l'annuaire</h3>
     
     	<form class=" form login" method="post" action="?page=login">
