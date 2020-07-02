@@ -13,9 +13,6 @@ ob_start(); ?>
     				<li><label class="required" for="password">Mot de passe</label>
     					<input type="password" id="password" name="password" value="" required/>
     				</li>
-					<li><label for="stayLogged">Rester connecté ? </label>
-					<input type="checkbox" name="stayLogged" id="stayLogged" />
-					</li>
 			<li class="button">
     			<button id="submit" type="submit">
     			Se connecter</button>

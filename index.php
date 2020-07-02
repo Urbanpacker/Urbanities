@@ -29,11 +29,6 @@ try{
         return true;
     }
 
-    function setLoggedCookies($memberDataConnection){
-        setcookie('email', $memberDataConnection['email'], time() + 999*365*24*3600, null, null, false, true);
-        setcookie('password', $memberDataConnection['password'], time() + 999*365*24*3600, null, null, false, true);
-    }
-    
     function accessMemberArea(){
         $memberIsAdmin = intval($_SESSION['memberIsAdmin']) ;
         $currentMemberId = SESSION_MEMBER_ID;
@@ -104,10 +99,7 @@ try{
                 $_SESSION['catAfterLogin'] = $_GET['catId'];
             }
 
-            if(NULL !== $_COOKIE['email'] && NULL !== $_COOKIE['password']){
-                $memberDataConnection['email'] = $_COOKIE['email'];
-                $memberDataConnection['password'] = $_COOKIE['password'];
-            } else if(NULL !== $_POST['email'] && NULL !== $_POST['password']){
+            if(NULL !== $_POST['email'] && NULL !== $_POST['password']){
                 $memberDataConnection['email'] = $_POST['email'] ;
                 $memberDataConnection['password'] = $_POST['password'] ;
             } else {
@@ -115,11 +107,7 @@ try{
                 die();
             }
 
-            if(loginMember($memberDataConnection)){
-                if($_POST['stayLogged']){
-                    setLoggedCookies($memberDataConnection);
-                }
-                
+            if(loginMember($memberDataConnection)){    
                 $requiredPage = $_SESSION['pageAfterLogin'];
                 unset($_SESSION['pageAfterLogin']);
                 $requiredSpot = $_SESSION['spotAfterLogin'];
