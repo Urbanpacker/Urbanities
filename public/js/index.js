@@ -129,7 +129,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
         mapContainer.classList.add("hidden");
         
         const newAdressButton = document.getElementById("newAdressButton") ;
-        newAdressButton.classList.add("hidden");
+        newAdressButton.textContent = "Afficher sur la carte" ; 
     
         var adressField = document.getElementById("adressMap");
         var postcodeField = document.getElementById("postcodeMap");
@@ -145,10 +145,16 @@ window.addEventListener('DOMContentLoaded', ()=>{
                     postcodeField.value = savedAdresses[0].postcode ;
                 }
 
-                let adress = adressField.value ? adressField.value : null ;
-                let postcode = postcodeField.value ? postcodeField.value : null;
+                //Store the adress into a variable to generate a new map with a new tilelayer
+                let adressToUse = adressField.value ? adressField.value : null ;
+                let postcodeToUse = postcodeField.value ? postcodeField.value : null;
                 
-                if(!adress || !postcode){
+                // Remove the "+" used in the AdressGetter.getCoordsFromAdress API to search geocoordinates
+                let char = /\+/gi;
+                adressField.value = adressField.value.replace(char, ' ');
+                postcodeField.value = postcodeField.value.replace(char, ' ');
+                
+                if(!adressToUse || !postcodeToUse){
                     return;
                 }
                 
@@ -157,7 +163,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
                 }
     
                 let place = new AdressGetter();
-                place.getCoordsFromAdress(adress, postcode)
+                place.getCoordsFromAdress(adressToUse, postcodeToUse)
                 .catch((error)=>{
                     //console.error(error);
                     console.warn("Impossible de récupérer les coordonnées de l'emplacement à partir de son adresse.");
@@ -180,27 +186,32 @@ window.addEventListener('DOMContentLoaded', ()=>{
             
         }
     
-        const checkFormData = () => {		
+        const checkFormData = (data) => {
+            adressField.value = data.adressField.value.trim();
+            postcodeField.value = data.postcodeField.value.trim();
+            postcodeField.value = postcodeField.value.length > 5 ? postcodeField.value.substring(0,5) : postcodeField.value; 
             if(adressField.value.length > 0 && postcodeField.value.length === 5){	       
+                // Limit the length of the postcode field intput to 5 characters
                 let postCodePattern = /[0-9]{5}/;
                 if(postCodePattern.test(postcodeField.value)){
-                    setMap();
+                    return true
                 }
             }
+            return false
         }
 
         setMap();
 
         adressField.addEventListener("blur", ()=>{
-            checkFormData();
+            if(checkFormData({adressField, postcodeField})){
+                setMap();
+            }
         });
     
         postcodeField.addEventListener("input", ()=>{
-            postcodeField.value = postcodeField.value.trim();
-            if(postcodeField.value.length > 5){
-                postcodeField.value	= postcodeField.value.substr(0, 5);
+            if(checkFormData({adressField, postcodeField})){
+                setMap();
             }
-                checkFormData();
         });
         
         newAdressButton.addEventListener("click", (e)=>{
@@ -215,7 +226,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
     displayMapFromAdress("displayMapFromAdressContainer");
 	/********************************************************/
 });    
-    /* SingleSpot Form dedicated functions */   
+    /* SingleSpotForm dedicated functions */   
 
 window.addEventListener('DOMContentLoaded', ()=>{
     if(document.getElementById("sportForm")){
