@@ -4,16 +4,14 @@
 
 function displayMemberProfile($memberId, $memberIsAdmin)
 {
-    $spotManager = new SpotManager();
-    $latestSpots = $spotManager->getLatestSpot($memberId, $memberIsAdmin);
+    $latestSpots = Spot::getLatestSpot($memberId, $memberIsAdmin);
     for($i = 0, $c = count($latestSpots); $i < $c ; ++$i){
         foreach($latestSpots[$i] as $key => $value){
             $latestSpots[$i][$key] = htmlspecialchars($value) ;
         }
     }
     
-    $favoriteManager = new FavoriteManager();
-    $favoritesSpots = $favoriteManager->getFavorites($_SESSION['memberId']);
+    $favoritesSpots = Favorite::getFavorites($_SESSION['memberId']);
     for($i = 0, $c = count($favoritesSpots); $i < $c ; ++$i){
         foreach($favoritesSpots[$i] as $key => $value){
             $favoritesSpots[$i][$key] = htmlspecialchars($value) ;
@@ -37,7 +35,7 @@ function loginMember($memberDataConnection){
     
     //$memberDataConnection['password'] = password_hash(memberDataConnection['password'], PASSWORD_DEFAULT);
     
-    $member = new MemberManager();
+    $member = new Member();
     $currentMemberData = $member->memberConnection($memberDataConnection);
 
     if(!$currentMemberData){

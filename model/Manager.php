@@ -1,9 +1,9 @@
 <?php
 
-class Manager{
-	protected function dbConnect()
+abstract class Manager{
+	static protected function dbConnect()
 	{
-		$db = new \PDO
+		$db = new PDO
 			(''.BDD_SGBD.':host='.BDD_HOST.';dbname='.BDD_DATABASE.'',''.BDD_USER.'',''.BDD_PASSWORD.'',
 				[
 					PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

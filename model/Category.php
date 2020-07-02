@@ -1,10 +1,10 @@
 <?php
 
-class CategoryManager extends Manager
+class Category extends Manager
 {
-    public function getCategories()
+    static public function getCategories()
     {
-        $db = $this->dbConnect();
+        $db = self::dbConnect();
         $req = $db->query('
             SELECT
                 catId,

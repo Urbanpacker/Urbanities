@@ -1,10 +1,10 @@
 <?php
 
-class SpotManager extends Manager
+class Spot extends Manager
 {
 	public function getLatestSpot($memberId,$memberIsAdmin = 0)
 	{
-		$db = $this->dbConnect();
+		$db = self::dbConnect();
 		$req = $db->prepare('
 			SELECT
 				spotId,
@@ -38,7 +38,7 @@ class SpotManager extends Manager
 
 	public function getSingleSpot($spotId, $memberId, $memberIsAdmin = 0)
 	{
-		$db = $this->dbConnect();
+		$db = self::dbConnect();
 		$req = $db->prepare('
 			SELECT
 				spotId,
@@ -82,7 +82,7 @@ class SpotManager extends Manager
 
 	public function getSpotsByCategory($catId, $memberId, $memberIsAdmin = 0)
 	{
-		$db = $this->dbConnect();
+		$db = self::dbConnect();
 		$req = $db->prepare('
 			SELECT
 				catName,
@@ -124,7 +124,7 @@ class SpotManager extends Manager
 	public function updateExistingSpot($spotData)
 	{
 		
-		$db = $this->dbConnect();
+		$db = self::dbConnect();
 		$req = $db->prepare(
 			'UPDATE Spots
 				SET 
@@ -152,7 +152,7 @@ class SpotManager extends Manager
 	public function recordNewSpot($spotData)
 	{
 
-		$db = $this->dbConnect();
+		$db = self::dbConnect();
 		$req = $db->prepare(
 			'INSERT INTO Spots(
 				spotName,
@@ -194,7 +194,7 @@ class SpotManager extends Manager
 
 	public function deleteSpot($spotId)
 	{	
-		$db = $this->dbConnect();
+		$db = self::dbConnect();
 		$req = $db->prepare(
 			'DELETE FROM
 				Spots

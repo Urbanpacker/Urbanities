@@ -3,7 +3,7 @@
 /******** Favorite controllers **********/
 
 function addToFavController($spotId, $memberId){
-    $favoriteManager = new FavoriteManager();
+    $favoriteManager = new Favorite();
     if(!$favoriteManager->checkIfFavoriteExists($spotId, $memberId)){
         $favoriteManager->addToFav($spotId, $memberId);
     }
@@ -11,7 +11,7 @@ function addToFavController($spotId, $memberId){
 }
 
 function removeFromFavController($spotId, $memberId){
-    $favoriteManager = new FavoriteManager();
+    $favoriteManager = new Favorite();
     if($favoriteManager->checkIfFavoriteExists($spotId, $memberId)){
         $favoriteManager->removeFromFav($spotId, $memberId);
     }

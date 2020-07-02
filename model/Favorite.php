@@ -1,10 +1,10 @@
 <?php
 
-class FavoriteManager extends Manager
+class Favorite extends Manager
 {
 	public function addToFav($spotId, $memberId)
 	{	
-		$db = $this->dbConnect();
+		$db = self::dbConnect();
 		$req = $db->prepare(
 			'INSERT INTO Favorites(
 				fk_spotId,
@@ -22,7 +22,7 @@ class FavoriteManager extends Manager
 
 	public function removeFromFav($spotId, $memberId)
 	{	
-		$db = $this->dbConnect();
+		$db = self::dbConnect();
 		$req = $db->prepare(
 			'DELETE FROM
 				Favorites
@@ -36,9 +36,9 @@ class FavoriteManager extends Manager
 		return $affectedLines;
 	}
 
-	public function getFavorites($memberId)
+	static public function getFavorites($memberId)
 	{
-		$db = $this->dbConnect();
+		$db = self::dbConnect();
 		$req = $db->prepare('
 			SELECT
 				spotId,
@@ -68,7 +68,7 @@ class FavoriteManager extends Manager
 
 	public function checkIfFavoriteByAnyone($spotId)
 	{
-		$db = $this->dbConnect();
+		$db = self::dbConnect();
 		$req = $db->prepare('
 			SELECT
 				favoriteId,
@@ -86,7 +86,7 @@ class FavoriteManager extends Manager
 
 	public function checkIfFavoriteExists($spotId, $memberId)
 	{
-		$db = $this->dbConnect();
+		$db = self::dbConnect();
 		$req = $db->prepare('
 			SELECT
 				favoriteId

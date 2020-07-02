@@ -1,10 +1,10 @@
 <?php
 
-class CountryManager extends Manager
+class Country extends Manager
 {
-    public function getCountries()
+    static public function getCountries()
     {
-        $db = $this->dbConnect();
+        $db = self::dbConnect();
         $req = $db->query('
             SELECT
                 countryId,

@@ -3,8 +3,8 @@
 	require('config.inc.php');
 
 	require('Manager.php');
-	require('SpotManager.php');
-	require('MemberManager.php');
-	require('FavoriteManager.php');
-	require('CategoryManager.php');
-	require('CountryManager.php');
+	require('Spot.php');
+	require('Member.php');
+	require('Favorite.php');
+	require('Category.php');
+	require('Country.php');

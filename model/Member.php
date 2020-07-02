@@ -1,10 +1,10 @@
 <?php
 
-class MemberManager extends Manager
+class Member extends Manager
 {
 	function memberConnection($memberDataConnection)
 	{
-		$db = $this->dbConnect();
+		$db = self::dbConnect();
 		$memberData = $db->prepare(
 			'SELECT
 				memberId,

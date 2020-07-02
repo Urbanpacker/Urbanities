@@ -4,8 +4,8 @@
 
 function displaySpotsByCategory($catId, $memberId, $memberIsAdmin)
 {
-    $spotManager = new SpotManager();
-    $spotsCategorized = $spotManager->getSpotsByCategory($catId, $memberId, $memberIsAdmin);
+    $spot = new Spot();
+    $spotsCategorized = $spot->getSpotsByCategory($catId, $memberId, $memberIsAdmin);
     
     if(!$spotsCategorized){
         $h1 = 'Aucun spot ne correspond a votre recherche';
@@ -37,38 +37,38 @@ function recordSpotController($spotData, $memberId, $memberIsAdmin)
 		$spotData[$key] = $value;
 	}
     
-    $categoryManager = new CategoryManager();
-    $spotData['image'] = $categoryManager->getCategoryImage($spotData['categoryId']);
+    $category = new Category();
+    $spotData['image'] = $category->getCategoryImage($spotData['categoryId']);
 
-    $spotManager = new SpotManager();
-    $existingSpot = $spotManager->getSingleSpot($spotData['spotId'], $memberId, $memberIsAdmin);
+    $spot = new Spot();
+    $existingSpot = $spot->getSingleSpot($spotData['spotId'], $memberId, $memberIsAdmin);
 
     if($existingSpot){
-        $spotId = $spotManager->updateExistingSpot($spotData);
+        $spotId = $spot->updateExistingSpot($spotData);
     } else {
-        $spotId = $spotManager->recordNewSpot($spotData) ;
+        $spotId = $spot->recordNewSpot($spotData) ;
     }
     header('Location: index.php?page=spotDetail&spotId='.$spotId);
 }
 
 function deleteSpotController($spotId, $memberId, $memberIsAdmin)
 {
-    $spotManager = new SpotManager();
-    $spotDetail = $spotManager->getSingleSpot($spotId, $memberId, $memberIsAdmin) ;
+    $spot = new Spot();
+    $spotDetail = $spot->getSingleSpot($spotId, $memberId, $memberIsAdmin) ;
     
     if(!$spotDetail){
         header('Location: index.php');
         die;    
     }
     
-    $favoriteManager = new FavoriteManager();
-    $favoriteSpot = $favoriteManager->checkIfFavoriteByAnyone($spotId) ;
+    $favorite = new Favorite();
+    $favoriteSpot = $favorite->checkIfFavoriteByAnyone($spotId) ;
 
     if((!intval($spotDetail['spotVisibility']) && $spotDetail['memberId'] == $memberId ) || $memberIsAdmin){
         if($favoriteSpot){
-            $favoriteManager->removeFromFav($favoriteSpot['spotId'], $favoriteSpot['memberId']);
+            $favorite->removeFromFav($favoriteSpot['spotId'], $favoriteSpot['memberId']);
         }
-        $spotManager->deleteSpot($spotId);
+        $spot->deleteSpot($spotId);
         header('Location: index.php');
     } else {
         header('Location: index.php?page=spotDetail&spotId='.$spotId);
@@ -77,8 +77,8 @@ function deleteSpotController($spotId, $memberId, $memberIsAdmin)
 
 function displaySingleSpotController($spotId, $memberId, $memberIsAdmin=0)
 {  
-    $spotManager = new SpotManager();
-    $spotDetail = $spotManager->getSingleSpot($spotId, $memberId, $memberIsAdmin);
+    $spot = new Spot();
+    $spotDetail = $spot->getSingleSpot($spotId, $memberId, $memberIsAdmin);
    
     if(!$spotDetail){
         header('Location: index.php');
@@ -89,8 +89,8 @@ function displaySingleSpotController($spotId, $memberId, $memberIsAdmin=0)
         $spotDetail[$key] = htmlspecialchars($value) ;
     }
  
-    $favoriteManager = new FavoriteManager();    
-    $spotInFavorites = $favoriteManager->checkIfFavoriteExists($spotId, $memberId) ? true : false ;
+    $favorite = new Favorite();    
+    $spotInFavorites = $favorite->checkIfFavoriteExists($spotId, $memberId) ? true : false ;
     
     $h1 = $spotDetail['spotName'];
 	$title = $h1.' - Projet Urbanities' ;
