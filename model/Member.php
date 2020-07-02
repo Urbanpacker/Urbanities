@@ -41,7 +41,7 @@ class Member extends Manager
 			)
 			VALUES(
 				:name,
-				:firstame,
+				:firstname,
 				:pseudo,
 				:email,
 				:postcode,
