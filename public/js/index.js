@@ -126,11 +126,12 @@ window.addEventListener('DOMContentLoaded', ()=>{
     const displayMapFromAdress = (container) => {
         const mapContainer = document.getElementById(container);
         if(null === mapContainer){return}
-        mapContainer.classList.add("hidden");
         
         const newAdressButton = document.getElementById("newAdressButton") ;
-        newAdressButton.textContent = "Afficher sur la carte" ; 
-    
+        newAdressButton.textContent = "Afficher sur la carte";
+        newAdressButton.style.display= "none";
+        newAdressButton.style.margin = "1rem auto 0";
+
         var adressField = document.getElementById("adressMap");
         var postcodeField = document.getElementById("postcodeMap");
     
@@ -175,7 +176,9 @@ window.addEventListener('DOMContentLoaded', ()=>{
                     postcodeField.style.cursor ="not-allowed";
 
                     newAdressButton.style.display = "block";
+                    newAdressButton.textContent = "Nouvelle recherche";
                     newAdressButton.style.margin = "15px auto";
+                    newAdressButton.dataset.action = "newSearch";
                     mapContainer.classList.remove("hidden");
                     displayMap(mapContainer, coords);
                 })
@@ -187,7 +190,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
         }
     
         const checkFormData = (data) => {
-            adressField.value = data.adressField.value.trim();
+            adressField.value = data.adressField.value;
             postcodeField.value = data.postcodeField.value.trim();
             postcodeField.value = postcodeField.value.length > 5 ? postcodeField.value.substring(0,5) : postcodeField.value; 
             if(adressField.value.length > 0 && postcodeField.value.length === 5){	       
@@ -202,25 +205,36 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
         setMap();
 
-        adressField.addEventListener("blur", ()=>{
+        adressField.addEventListener("input", ()=>{
             if(checkFormData({adressField, postcodeField})){
-                setMap();
+                newAdressButton.style.display = "block";
+            } else{
+                newAdressButton.style.display = "none";
             }
         });
     
         postcodeField.addEventListener("input", ()=>{
             if(checkFormData({adressField, postcodeField})){
-                setMap();
+                newAdressButton.style.display = "block";
+            } else{
+                newAdressButton.style.display = "none";
             }
         });
         
         newAdressButton.addEventListener("click", (e)=>{
             e.preventDefault();
-            removeDataFromDomStorage("savedCoords", "session");
-            removeDataFromDomStorage("savedAdresses", "session");
-            location.reload();
+            
+            if(e.currentTarget.dataset.action == "newSearch"){
+                removeDataFromDomStorage("savedCoords", "session");
+                removeDataFromDomStorage("savedAdresses", "session");
+                location.reload();
+            } else {
+                if(checkFormData({adressField, postcodeField})){
+                    newAdressButton.style.display = "block";
+                    setMap();
+                }
+            }
         });
-        
     };
 
     displayMapFromAdress("displayMapFromAdressContainer");
