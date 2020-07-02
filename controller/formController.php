@@ -11,7 +11,8 @@ function displayLoginForm($invalidLogin = false)
 
 function displayEditSpotForm($spotId, $memberId, $memberIsAdmin)
 {
-    $spotToEdit = getSingleSpot($spotId, $memberId, $memberIsAdmin);
+    $spot = new Spot();
+    $spotToEdit = $spot->getSingleSpot($spotId, $memberId, $memberIsAdmin);
     
     if(!$spotToEdit){
         header('Location: index.php');
@@ -25,16 +26,34 @@ function displayEditSpotForm($spotId, $memberId, $memberIsAdmin)
     displaySpotForm($memberId, $spotToEdit);
 }
 
+function displayEditMemberForm($memberId)
+{
+    $member = new Member();
+    $memberToEdit = $member->getMember($memberId);
+    
+    if(!$memberToEdit){
+        header('Location: index.php');
+        die;    
+    }
+    
+    foreach($memberToEdit as $key => $value){
+        $memberToEdit[$key] = htmlspecialchars($value) ;
+    }
+    
+    displayMemberForm($memberToEdit);
+}
+
 function displaySpotForm($memberId, $spotData = null)
 {
-    $categories = getCategories() ;
+    
+    $categories = Category::getCategories() ;
     for($i = 0, $c = count($categories); $i < $c ; ++$i){
         foreach($categories[$i] as $key => $value){
             $categories[$i][$key] = htmlspecialchars($value) ;
         }
     }
     
-    $countries = getCountries();
+    $countries = Country::getCountries();
     for($i = 0, $c = count($countries); $i < $c ; ++$i){
         foreach($countries[$i] as $key => $value){
             $countries[$i][$key] = htmlspecialchars($value) ;
@@ -72,4 +91,39 @@ function displaySpotForm($memberId, $spotData = null)
     $title = 'Projet Urbanities - '.$h1;
 	require('views/frontend/spotFormView.php');
 }
+
+
+function displayMemberForm($memberData = null)
+{   
+    $countries = Country::getCountries();
+    for($i = 0, $c = count($countries); $i < $c ; ++$i){
+        foreach($countries[$i] as $key => $value){
+            $countries[$i][$key] = htmlspecialchars($value) ;
+        }
+    }
+    
+    if(isset($memberData)){
+        foreach($memberData as $key => $value){
+            if($value == "Inconnu" || $value == "Inconnue" ){
+                $memberExistingData[$key] = '' ;        
+                continue;
+            }
+            $memberExistingData[$key] = $value ;
+        }
+    } else {
+        $memberExistingData= [
+            'memberId' => '',
+            'memberName' => '',
+            'memberPostcode' => '',
+            'memberPseudo' => '',
+            'memberEmail'  => '',
+            'memberPassword' => '',
+            'countryName' => ''
+        ];
+    }
+    $h1 = isset($memberData) ? 'Mise à jour du profil d\'un membre' : 'Création d\'un nouveau membre' ;
+    $title = 'Projet Urbanities - '.$h1;
+	require('views/frontend/memberFormView.php');
+}
+
 
