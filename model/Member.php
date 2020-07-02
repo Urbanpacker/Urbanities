@@ -2,6 +2,29 @@
 
 class Member extends Manager
 {
+
+	public function updateExistingMember($memberData)
+	{
+		
+		$db = self::dbConnect();
+		$req = $db->prepare(
+			'UPDATE Members
+			SET
+				memberName = :name,
+				memberFirstname = :firstname,
+				memberPseudo = :pseudo,
+				memberEmail = :email,
+				memberPostcode = :postcode,
+				memberPassword = :password,
+				fk_countryId = :countryId
+			WHERE
+				memberId = :memberId
+		');
+		$req->execute($memberData);
+		$req->closeCursor();
+		return $memberData['memberId']; 
+	}
+
 	public function recordNewMember($memberData)
 	{
 		$db = self::dbConnect();
@@ -18,7 +41,7 @@ class Member extends Manager
 			)
 			VALUES(
 				:name,
-				:firstname,
+				:firstame,
 				:pseudo,
 				:email,
 				:postcode,

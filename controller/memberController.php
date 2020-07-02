@@ -3,11 +3,13 @@
 /******** Member controllers ************/
 
 define('MEMBER_ID', 'memberId');
+define('PASSWORD', 'password');
 
 function recordMemberController($memberData)
 {
+
+    
     $numberValues = ['postcode', 'countryId'];
-	
 	foreach($memberData as $key => $value){
 		if(in_array($key, $numberValues)){
 			$memberData[$key] = intval($value);
@@ -23,11 +25,13 @@ function recordMemberController($memberData)
         }
     }
 
+    $memberData[PASSWORD] = password_hash($memberData[PASSWORD], PASSWORD_DEFAULT);
+
     if($completedForm){
         $member = new Member();
         $existingMember = $member->getMember($memberData[MEMBER_ID]);
         if($existingMember){
-            $memberId = $member->updateExistingMember($existingMember);
+            $memberId = $member->updateExistingMember($memberData);
         } else {
             unset($memberData[MEMBER_ID]);
             $memberId = $member->recordNewMember($memberData) ;
@@ -63,14 +67,14 @@ function logoutMember()
     unset($_SESSION);
     session_destroy();
     setcookie('email', '', time() + 1, null, null, false, true);
-    setcookie('password', '', time() + 1, null, null, false, true);
+    setcookie(PASSWORD, '', time() + 1, null, null, false, true);
     header('Location: index.php');
     die;
 }
 
 function loginMember($memberDataConnection){
     
-    //$memberDataConnection['password'] = password_hash(memberDataConnection['password'], PASSWORD_DEFAULT);
+    $memberDataConnection[PASSWORD] = password_hash($memberDataConnection[PASSWORD], PASSWORD_DEFAULT);
     
     $member = new Member();
     $currentMemberData = $member->memberConnection($memberDataConnection);

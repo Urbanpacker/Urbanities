@@ -46,6 +46,9 @@
 					<li>
 						<a id="logout" href="?page=logout">Se deconnecter</a>
 					</li>
+					<li>
+						<a href="?page=editMemberData">Modifier les données du membre</a>
+					</li>
 				</ul>
 			</nav>
 			<p id="memberNotice" class="info_header">Vous êtes connecté sous le pseudo "<?= $_SESSION['memberPseudo'] ?>"</p>

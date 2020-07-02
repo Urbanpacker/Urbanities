@@ -62,6 +62,12 @@ try{
                 case 'addNewSpot':
                     displaySpotForm($currentMemberId);
                     break;
+                case 'editMemberData':
+                    displayEditMemberForm($currentMemberId);
+                    break;
+                case 'recordMember':
+                    recordMemberController($_POST);
+                break;
                 case 'recordSpot':
                     recordSpotController($_POST, $currentMemberId, $memberIsAdmin);
                     break;

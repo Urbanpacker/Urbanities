@@ -26,6 +26,23 @@ function displayEditSpotForm($spotId, $memberId, $memberIsAdmin)
     displaySpotForm($memberId, $spotToEdit);
 }
 
+function displayEditMemberForm($memberId)
+{
+    $member = new Member();
+    $memberToEdit = $member->getMember($memberId);
+    
+    if(!$memberToEdit){
+        header('Location: index.php');
+        die;    
+    }
+    
+    foreach($memberToEdit as $key => $value){
+        $memberToEdit[$key] = htmlspecialchars($value) ;
+    }
+    
+    displayMemberForm($memberToEdit);
+}
+
 function displaySpotForm($memberId, $spotData = null)
 {
     
@@ -77,8 +94,7 @@ function displaySpotForm($memberId, $spotData = null)
 
 
 function displayMemberForm($memberData = null)
-{
-    
+{   
     $countries = Country::getCountries();
     for($i = 0, $c = count($countries); $i < $c ; ++$i){
         foreach($countries[$i] as $key => $value){
@@ -105,8 +121,7 @@ function displayMemberForm($memberData = null)
             'countryName' => ''
         ];
     }
-    $h1 = isset($spotData) ? 'Mise à jour du profil d\'un membre' : 'Création d\'un nouveau membre' ;
-    $authorId = $memberId;
+    $h1 = isset($memberData) ? 'Mise à jour du profil d\'un membre' : 'Création d\'un nouveau membre' ;
     $title = 'Projet Urbanities - '.$h1;
 	require('views/frontend/memberFormView.php');
 }
