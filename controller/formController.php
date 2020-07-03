@@ -22,14 +22,14 @@ function displayEditSpotForm($spotId, $memberId, $memberIsAdmin)
     foreach($spotToEdit as $key => $value){
         $spotToEdit[$key] = htmlspecialchars($value) ;
     }
-    
+
     displaySpotForm($memberId, $spotToEdit);
 }
 
 function displayEditMemberForm($memberId)
 {
     $member = new Member();
-    $memberToEdit = $member->getMember($memberId);
+    $memberToEdit = $member->getMember(array('id' => $memberId));
     
     if(!$memberToEdit){
         header('Location: index.php');

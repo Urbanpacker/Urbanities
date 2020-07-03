@@ -5,10 +5,10 @@
 ?>
 			<section id="memberForm" class="form">
 				<h1><?= $h1 ?></h1>
+<?php if(!MEMBER_EXISTING_DATA_ID): ?>
 				<form class="" method="post" action ="?page=recordMember">
-					<input type="hidden" id="memberId" name="memberId" value="<?= $authorId ?>"/>
-<?php if(MEMBER_EXISTING_DATA_ID): ?>
-					<input type="hidden" id="memberId" name="memberId" value="<?= MEMBER_EXISTING_DATA_ID ?>"/>
+<?php else: ?>
+				<form class="" method="post" action ="?page=editMember">
 <?php endif;?>
 					<fieldset>
 				        <legend>Informations sur le membre</legend>

@@ -5,7 +5,6 @@ class Member extends Manager
 
 	public function updateExistingMember($memberData)
 	{
-		
 		$db = self::dbConnect();
 		$req = $db->prepare(
 			'UPDATE Members
@@ -56,8 +55,12 @@ class Member extends Manager
 		return $db->lastInsertId();		
 	}
 
-	function getMember($memberId){
+	function getMember(array $data){
 		$db = self::dbConnect();
+
+		$data['id'] = $data['id'] ? $data['id'] : '';
+		$data['email'] = $data['email'] ? $data['email'] : '';
+
 		$memberData = $db->prepare(
 			'SELECT
 				memberId,
@@ -82,11 +85,16 @@ class Member extends Manager
 			INNER JOIN
 				Country ON Members.fk_countryId = Country.countryId
 			WHERE
-				memberId = ?
+				memberId = :memberId
+			OR 	
+				memberEmail = :memberEmail
 			');
-		$memberData->execute([$memberId]);
+		$memberData->bindValue(':memberId', $data['id'], PDO::PARAM_STR);	
+		$memberData->bindValue(':memberEmail', $data['email'], PDO::PARAM_STR);	
+		$memberData->execute();
 		
 		return $memberData->fetch();
+
 	}
 
 
