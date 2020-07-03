@@ -4,11 +4,28 @@
 
 define('MEMBER_ID', 'memberId');
 define('PASSWORD', 'password');
+define('EMAIL','email');
+
+function editMemberController($memberData)
+{    
+    $member = new Member();
+    $memberData[MEMBER_ID] = $_SESSION[MEMBER_ID];
+
+    $existingMember = $member->getMember(array('id' => $memberData[MEMBER_ID]));
+    $existingEmailOwner = $member->getMember(array('email' => $memberData[EMAIL]));
+
+    $memberData[PASSWORD] = password_hash($memberData[PASSWORD], PASSWORD_DEFAULT);
+
+    if($existingEmailOwner && ($existingEmailOwner[MEMBER_ID] !== $existingMember[MEMBER_ID])){
+        displayEditMemberForm($memberData[MEMBER_ID]);
+    } else {
+        $memberId = $member->updateExistingMember($memberData);
+        header('Location: index.php');
+    }
+}
 
 function recordMemberController($memberData)
-{
-
-    
+{    
     $numberValues = ['postcode', 'countryId'];
 	foreach($memberData as $key => $value){
 		if(in_array($key, $numberValues)){
@@ -20,28 +37,25 @@ function recordMemberController($memberData)
     
     $completedForm = true;
     foreach($memberData as $key => $value){
-        if(!in_array($key, ['countryId', MEMBER_ID]) && $value ===''){
+        if(!in_array($key, ['countryId']) && $value ===''){
             $completedForm = false;
         }
     }
 
-    $memberData['password'] = password_hash($memberData['password'], PASSWORD_DEFAULT);
-
-    if($completedForm){
-        $member = new Member();
-        $existingMember = $member->getMember($memberData[MEMBER_ID]);
-        if($existingMember){
-            $memberId = $member->updateExistingMember($memberData);
-        } else {
-            unset($memberData[MEMBER_ID]);
-            $memberId = $member->recordNewMember($memberData) ;
-        }
+    $memberData[PASSWORD] = password_hash($memberData[PASSWORD], PASSWORD_DEFAULT);
+    
+    $member = new Member();
+    
+    $existingEmailOwner = $member->getMember(array($memberData[EMAIL]));
+    
+    if(!$existingEmailOwner && $completedForm){
+        $memberId = $member->recordNewMember($memberData) ;
+        header('Location: index.php');
+    } else {
+        displayMemberForm($memberData);
     }
-
-    header('Location: index.php');
+    
 }
-
-
 
 function displayMemberProfile($memberId, $memberIsAdmin)
 {
@@ -66,8 +80,6 @@ function logoutMember()
 {
     unset($_SESSION);
     session_destroy();
-    setcookie('email', '', time() + 1, null, null, false, true);
-    setcookie(PASSWORD, '', time() + 1, null, null, false, true);
     header('Location: index.php');
     die;
 }
@@ -76,14 +88,14 @@ function loginMember($memberDataConnection){
     
     $member = new Member();
 
-    $currentMemberData = $member->memberConnection($memberDataConnection['email']);
+    $currentMemberData = $member->memberConnection($memberDataConnection[EMAIL]);
 
-    $authSuccess = password_verify($memberDataConnection['password'], $currentMemberData['memberPassword']);
+    $authSuccess = password_verify($memberDataConnection[PASSWORD], $currentMemberData['memberPassword']);
 
     if(!$authSuccess){
         return false ;
     } else{
-        $member->recordConnectionTimestamp($currentMemberData['memberId']);
+        $member->recordConnectionTimestamp($currentMemberData[MEMBER_ID]);
         foreach($currentMemberData as $key => $value){
             $_SESSION[$key] = htmlspecialchars($value);
         }

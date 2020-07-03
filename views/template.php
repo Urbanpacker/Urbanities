@@ -48,7 +48,7 @@
 						<a id="logout" href="?page=logout">Se deconnecter</a>
 					</li>
 					<li>
-						<a href="?page=editMemberData">Modifier les données du membre</a>
+						<a href="?page=editMemberForm">Modifier les données du membre</a>
 					</li>
 				</ul>
 			</nav>

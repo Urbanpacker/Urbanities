@@ -57,8 +57,11 @@ try{
                 case 'addNewSpot':
                     displaySpotForm($currentMemberId);
                     break;
-                case 'editMemberData':
+                case 'editMemberForm':
                     displayEditMemberForm($currentMemberId);
+                    break;
+                case 'editMember':
+                    editMemberController($_POST);
                     break;
                 case 'recordMember':
                     recordMemberController($_POST);
